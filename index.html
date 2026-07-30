@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Destiny Des Driving School | We Drive You To Your Destiny</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* Kinetic Horizon Design System Tokens */
+        :root {
+            /* Colors */
+            --primary: #000613;
+            --on-primary: #ffffff;
+            --primary-fixed: #d4e3ff;
+            --secondary: #0059bb;
+            --on-secondary: #ffffff;
+            --secondary-fixed: #d8e2ff;
+            --on-secondary-fixed: #001a41;
+            --secondary-container: #0070ea;
+            --tertiary-container: #12202b;
+            --on-tertiary-container: #798896;
+            --background: #fbf9f8;
+            --on-background: #1b1c1c;
+            --surface: #fbf9f8;
+            --on-surface: #1b1c1c;
+            --surface-variant: #e4e2e1;
+            --on-surface-variant: #43474e;
+            --surface-container-low: #f6f3f2;
+            --surface-container-highest: #e4e2e1;
+            --outline-variant: #c4c6cf;
+            
+            /* Typography */
+            --font-display-lg: 'Lexend', sans-serif;
+            --font-display-lg-size: 48px;
+            --font-display-lg-line-height: 56px;
+            --font-display-lg-weight: 700;
+            --font-display-lg-mobile-size: 32px;
+            --font-display-lg-mobile-line-height: 40px;
+            
+            --font-headline-md: 'Lexend', sans-serif;
+            --font-headline-md-size: 32px;
+            --font-headline-md-line-height: 40px;
+            --font-headline-md-weight: 600;
+
+            --font-headline-sm: 'Lexend', sans-serif;
+            --font-headline-sm-size: 24px;
+            --font-headline-sm-line-height: 32px;
+            --font-headline-sm-weight: 600;
+
+            --font-title-lg: 'Inter', sans-serif;
+            --font-title-lg-size: 20px;
+            --font-title-lg-line-height: 28px;
+            --font-title-lg-weight: 600;
+
+            --font-body-lg: 'Inter', sans-serif;
+            --font-body-lg-size: 18px;
+            --font-body-lg-line-height: 28px;
+            --font-body-lg-weight: 400;
+
+            --font-body-md: 'Inter', sans-serif;
+            --font-body-md-size: 16px;
+            --font-body-md-line-height: 24px;
+            --font-body-md-weight: 400;
+
+            --font-label-md: 'Inter', sans-serif;
+            --font-label-md-size: 14px;
+            --font-label-md-line-height: 20px;
+            --font-label-md-weight: 500;
+            
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --spacing-gutter: 24px;
+            --grid-margin-desktop: 80px;
+            --grid-margin-mobile: 20px;
+            
+            /* Border Radius */
+            --radius-default: 0.25rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+            --radius-2xl: 1rem;
+            --radius-full: 9999px;
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-level-1: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-level-2: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-level-3: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        /* Base Styles */
+        body {
+            background-color: var(--background);
+            color: var(--on-background);
+            font-family: var(--font-body-md);
+            font-size: var(--font-body-md-size);
+            line-height: var(--font-body-md-line-height);
+            font-weight: var(--font-body-md-weight);
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        button {
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* Utilities */
+        .container {
+            padding-left: var(--grid-margin-mobile);
+            padding-right: var(--grid-margin-mobile);
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1440px;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                padding-left: var(--grid-margin-desktop);
+                padding-right: var(--grid-margin-desktop);
+            }
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Typography Classes */
+        .display-lg {
+            font-family: var(--font-display-lg);
+            font-size: var(--font-display-lg-mobile-size);
+            line-height: var(--font-display-lg-mobile-line-height);
+            font-weight: var(--font-display-lg-weight);
+            letter-spacing: 0.02em;
+        }
+        @media (min-width: 768px) {
+            .display-lg {
+                font-size: var(--font-display-lg-size);
+                line-height: var(--font-display-lg-line-height);
+            }
+        }
+
+        .headline-md {
+            font-family: var(--font-headline-md);
+            font-size: var(--font-headline-md-size);
+            line-height: var(--font-headline-md-line-height);
+            font-weight: var(--font-headline-md-weight);
+            letter-spacing: 0.01em;
+        }
+
+        .headline-sm {
+            font-family: var(--font-headline-sm);
+            font-size: var(--font-headline-sm-size);
+            line-height: var(--font-headline-sm-line-height);
+            font-weight: var(--font-headline-sm-weight);
+            letter-spacing: 0.01em;
+        }
+
+        .title-lg {
+            font-family: var(--font-title-lg);
+            font-size: var(--font-title-lg-size);
+            line-height: var(--font-title-lg-line-height);
+            font-weight: var(--font-title-lg-weight);
+        }
+
+        .body-lg {
+            font-family: var(--font-body-lg);
+            font-size: var(--font-body-lg-size);
+            line-height: var(--font-body-lg-line-height);
+            font-weight: var(--font-body-lg-weight);
+        }
+        
+        .body-md {
+            font-family: var(--font-body-md);
+            font-size: var(--font-body-md-size);
+            line-height: var(--font-body-md-line-height);
+            font-weight: var(--font-body-md-weight);
+        }
+
+        .label-md {
+            font-family: var(--font-label-md);
+            font-size: var(--font-label-md-size);
+            line-height: var(--font-label-md-line-height);
+            font-weight: var(--font-label-md-weight);
+            letter-spacing: 0.05em;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Apply delays using inline styles or nth-child if needed, inline kept for simplicity based on original */
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(251, 249, 248, 0.8); /* surface/80 */
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow-sm);
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .navbar {
+                display: block;
+            }
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .navbar-brand {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: var(--spacing-gutter);
+            align-items: center;
+        }
+
+        .navbar-link {
+            color: var(--on-surface-variant);
+            transition: color 0.2s, background-color 0.2s;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-default);
+        }
+        
+        .navbar-link:hover {
+            color: var(--secondary);
+            background-color: var(--surface-container-low);
+        }
+
+        .navbar-link.active {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 4px;
+            border-radius: 0;
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .btn-text {
+            color: var(--on-surface-variant);
+            background: none;
+            transition: color 0.2s;
+        }
+        .btn-text:hover {
+            color: var(--secondary);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-lg);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-level-2);
+        }
+        
+        .btn-primary-large {
+            padding: 12px 24px;
+            border-radius: var(--radius-xl);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--on-secondary);
+            padding: 12px 24px;
+            border-radius: var(--radius-xl);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-level-2);
+        }
+        
+        .btn-secondary-fixed {
+            background-color: var(--secondary-fixed);
+            color: var(--on-secondary-fixed);
+            padding: 12px 24px;
+            border-radius: var(--radius-xl);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-secondary-fixed:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-level-2);
+        }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: var(--surface);
+            border-top: 1px solid var(--outline-variant);
+            justify-content: space-around;
+            padding-top: var(--spacing-sm);
+            padding-bottom: env(safe-area-inset-bottom, 16px);
+            box-shadow: var(--shadow-level-3);
+        }
+        @media (min-width: 768px) {
+            .mobile-nav {
+                display: none;
+            }
+        }
+        
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            color: var(--on-surface-variant);
+        }
+        .mobile-nav-item.active {
+            color: var(--secondary);
+        }
+        .mobile-nav-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        .mobile-nav-text {
+            font-size: 10px;
+        }
+
+        /* Main Content Layout */
+        main {
+            padding-top: 96px; /* pt-24 */
+            padding-bottom: 96px;
+        }
+        @media (min-width: 768px) {
+            main {
+                padding-top: 128px; /* md:pt-32 */
+            }
+        }
+
+        section {
+            margin-bottom: var(--spacing-xxl);
+        }
+
+        .section-padded {
+            padding-top: var(--spacing-xxl);
+            padding-bottom: var(--spacing-xxl);
+        }
+        
+        .bg-surface-low {
+            background-color: var(--surface-container-low);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+            align-items: center;
+            min-height: 70vh;
+        }
+        @media (min-width: 768px) {
+            .hero {
+                flex-direction: row;
+            }
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero-content > * + * {
+            margin-top: var(--spacing-lg);
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            background-color: rgba(0, 112, 234, 0.1); /* secondary-container/10 */
+            color: var(--secondary-container);
+            font-weight: 600;
+        }
+
+        .hero-title {
+            color: var(--primary);
+            max-width: 42rem; /* max-w-2xl */
+        }
+
+        .hero-desc {
+            color: var(--on-surface-variant);
+            max-width: 36rem; /* max-w-xl */
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            padding-top: 16px;
+        }
+        @media (min-width: 640px) {
+            .hero-actions {
+                flex-direction: row;
+            }
+        }
+
+        .hero-image-container {
+            flex: 1;
+            width: 100%;
+            height: 400px;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-level-2);
+            position: relative;
+        }
+        @media (min-width: 768px) {
+            .hero-image-container {
+                height: 600px;
+            }
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            inset: 0;
+        }
+
+        /* Grid Layouts */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-gutter);
+        }
+        @media (min-width: 768px) {
+            .grid-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            /* For 3 cols on lg screens specifically if needed, here just relying on md breakpoint */
+        }
+
+        .grid-auto-fit {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-gutter);
+        }
+        @media (min-width: 768px) {
+            .grid-auto-fit {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .grid-auto-fit {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .section-header-left {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .section-title {
+            color: var(--primary);
+        }
+        
+        .section-subtitle {
+            color: var(--on-surface-variant);
+            margin-top: 8px;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--surface);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-level-1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        .card:hover {
+            box-shadow: var(--shadow-level-2);
+            transform: scale(1.02);
+        }
+        
+        .card-p-lg {
+            padding: var(--spacing-lg);
+        }
+        
+        .card-centered {
+            align-items: center;
+            text-align: center;
+        }
+        
+        .card-outlined {
+            border: 2px solid var(--primary);
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-xl);
+            background-color: var(--secondary-fixed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+        }
+
+        .card-title {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .card-text {
+            color: var(--on-surface-variant);
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        /* Split Section */
+        .split-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .split-section {
+                flex-direction: row-reverse;
+            }
+        }
+        
+        .split-content {
+            flex: 1;
+        }
+        .split-content > * + * {
+            margin-top: var(--spacing-lg);
+        }
+        
+        .split-image {
+            flex: 1;
+            width: 100%;
+            height: 400px;
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-level-1);
+            background-color: var(--surface-variant); /* Placeholder color if no image */
+        }
+
+        /* Curriculum Cards Specific */
+        .curriculum-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .tag-small {
+            padding: 4px 12px;
+            background-color: rgba(216, 226, 255, 0.5); /* secondary-fixed/50 */
+            color: var(--secondary-fixed); /* Wait, contrast might be bad, adjusting to secondary per original visually but code says text-secondary-fixed */
+            color: var(--secondary); /* Overriding text-secondary-fixed for visibility based on screenshot */
+            border-radius: var(--radius-full);
+            font-size: 12px;
+        }
+
+        /* How It Works Specific */
+        .step-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .step-number {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-full);
+            background-color: var(--primary-fixed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        /* Pricing Specific */
+        .price-display {
+            color: var(--secondary);
+        }
+        .price-period {
+            color: var(--on-surface-variant);
+        }
+        .pricing-action {
+            text-align: center;
+            margin-top: var(--spacing-xl);
+        }
+
+        /* CTA Section */
+        .cta-box {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            border-radius: var(--radius-2xl);
+            padding: var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-xl);
+            box-shadow: var(--shadow-level-2);
+        }
+        @media (min-width: 768px) {
+            .cta-box {
+                padding: var(--spacing-xxl);
+                flex-direction: row;
+            }
+        }
+        
+        .cta-content {
+            max-width: 42rem;
+            text-align: center;
+        }
+        .cta-content > * + * {
+            margin-top: 16px;
+        }
+        @media (min-width: 768px) {
+            .cta-content {
+                text-align: left;
+            }
+        }
+        
+        .cta-title {
+            color: var(--on-primary);
+            margin: 0;
+        }
+        .cta-desc {
+            color: var(--surface-variant);
+            margin: 0;
+        }
+        
+        .btn-cta {
+            background-color: var(--secondary);
+            color: var(--on-secondary);
+            padding: 16px 32px;
+            border-radius: var(--radius-xl);
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-level-3);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--on-primary);
+            width: 100%;
+            border-top-left-radius: var(--radius-xl);
+            border-top-right-radius: var(--radius-xl);
+            border-top: 1px solid rgba(196, 198, 207, 0.1);
+            padding-top: var(--spacing-xxl);
+            padding-bottom: var(--spacing-xxl);
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-gutter);
+        }
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .footer-brand-col {
+            grid-column: span 1;
+        }
+        @media (min-width: 768px) {
+            .footer-brand-col {
+                grid-column: span 2;
+            }
+        }
+        
+        .footer-brand-col > * + * {
+            margin-top: var(--spacing-md);
+        }
+        
+        .footer-brand-name {
+            color: var(--on-primary);
+            margin: 0;
+        }
+        
+        .footer-desc {
+            color: var(--surface-variant);
+            max-width: 24rem;
+            margin: 0;
+        }
+        
+        .footer-copy {
+            color: var(--surface-variant);
+            margin-top: var(--spacing-xl);
+            font-size: 14px;
+        }
+
+        .footer-nav-col {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+        
+        .footer-title {
+            margin: 0 0 8px 0;
+        }
+
+        .footer-link {
+            color: var(--surface-variant);
+            transition: color 0.2s;
+        }
+        .footer-link:hover {
+            color: var(--secondary-fixed);
+        }
+
+    
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 767px) {
+  :root { --grid-margin-mobile: 16px; }
+  body { font-size: 15px; line-height: 1.55; padding-bottom: 76px; }
+  .container { width: 100%; box-sizing: border-box; padding-left: 16px; padding-right: 16px; }
+  main { padding-top: 24px; padding-bottom: 24px; }
+  .section-padded { padding-top: 48px; padding-bottom: 48px; }
+  .display-lg { font-size: 30px; line-height: 1.18; letter-spacing: 0; }
+  .headline-md { font-size: 26px; line-height: 1.25; }
+  .headline-sm { font-size: 21px; line-height: 1.3; }
+  .title-lg { font-size: 18px; line-height: 1.35; }
+  .body-lg { font-size: 16px; line-height: 1.65; }
+  .body-md { font-size: 15px; line-height: 1.6; }
+
+  .mobile-nav {
+    min-height: 62px;
+    padding: 6px 8px max(8px, env(safe-area-inset-bottom));
+    box-sizing: border-box;
+  }
+  .mobile-nav-item {
+    min-width: 64px;
+    min-height: 50px;
+    justify-content: center;
+    border-radius: 12px;
+  }
+
+  .hero {
+    min-height: auto;
+    gap: 28px;
+    align-items: stretch;
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+  .hero-content, .hero-desc { width: 100%; max-width: none; }
+  .hero-content > * + * { margin-top: 16px; }
+  .hero-actions {
+    width: 100%;
+    gap: 12px;
+    padding-top: 8px;
+  }
+  .hero-actions a, .hero-actions button {
+    width: 100%;
+    min-height: 48px;
+    box-sizing: border-box;
+  }
+  .hero-image-container {
+    height: min(58vw, 360px);
+    min-height: 240px;
+    border-radius: 20px;
+  }
+
+  .grid-3, .grid-auto-fit {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .card {
+    padding: 20px;
+    border-radius: 18px;
+  }
+  .card:hover { transform: none; }
+
+  .split-section { gap: 24px; }
+  .split-section .split-content { order: 1; width: 100%; }
+  .split-section .split-image { order: 2; }
+  .split-image {
+    height: min(62vw, 340px);
+    min-height: 220px;
+    border-radius: 18px;
+  }
+
+  .section-header, .section-header-left { margin-bottom: 22px; }
+  .section-header-left { text-align: left; }
+
+  .curriculum-header { gap: 12px; }
+
+  .step-card { padding: 8px 0; }
+  .step-number { width: 54px; height: 54px; }
+
+  .price-display { font-size: 32px; }
+
+  .cta-box {
+    padding: 28px 20px;
+    border-radius: 20px;
+    gap: 20px;
+  }
+  .cta-content {
+    width: 100%;
+    text-align: left;
+  }
+  .btn-cta {
+    width: 100%;
+    min-height: 50px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  footer {
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    padding-top: 40px;
+    padding-bottom: 32px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .footer-brand-col { grid-column: auto; }
+  .footer-desc { max-width: none; }
+
+  a, button { -webkit-tap-highlight-color: transparent; }
+  img { max-width: 100%; }
+  p, h1, h2, h3, h4 { overflow-wrap: anywhere; }
+}
+
+@media (max-width: 380px) {
+  .container { padding-left: 14px; padding-right: 14px; }
+  .display-lg { font-size: 28px; }
+  .headline-md { font-size: 24px; }
+  .mobile-nav-item { min-width: 54px; padding: 6px 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+</style>
+</head>
+<body>
+<!-- TopNavBar -->
+<nav class="navbar">
+<div class="container navbar-content">
+<a class="navbar-brand headline-sm headline-sm" href="index.html">Destiny Des</a>
+<div class="navbar-links label-md label-md">
+<a class="navbar-link active" href="index.html">Home</a>
+<a class="navbar-link" href="about.html">About</a>
+<a class="navbar-link" href="lessons.html">Lessons</a>
+<a class="navbar-link" href="pricing.html">Pricing</a>
+<a class="navbar-link" href="contact.html">Contact</a>
+</div>
+<div class="navbar-actions label-md label-md">
+<a class="btn-text" href="login.html">Login</a>
+<button class="btn-primary">Student Portal</button>
+</div>
+</div>
+</nav>
+<!-- Mobile Nav Anchor -->
+<nav class="mobile-nav">
+<a class="mobile-nav-item active" href="index.html">
+<span class="material-symbols-outlined mobile-nav-icon">home</span>
+<span class="label-md mobile-nav-text">Home</span>
+</a>
+<a class="mobile-nav-item" href="lessons.html">
+<span class="material-symbols-outlined mobile-nav-icon">school</span>
+<span class="label-md mobile-nav-text">Lessons</span>
+</a>
+<a class="mobile-nav-item" href="login.html">
+<span class="material-symbols-outlined mobile-nav-icon">account_circle</span>
+<span class="label-md mobile-nav-text">Portal</span>
+</a>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="container hero">
+<div class="hero-content fade-in-up">
+<div class="tag-pill label-md label-md">
+                Professional Driving Lessons
+            </div>
+<h1 class="display-lg display-lg hero-title">
+                We Drive You To Your Destiny.
+            </h1>
+<p class="body-lg body-lg hero-desc">
+                Build confidence behind the wheel with our premium, safety-first curriculum. Expert instructors, modern vehicles, and a modern approach to driving education.
+            </p>
+<div class="hero-actions">
+<button class="btn-primary btn-primary-large label-md label-md">
+                    Book a Lesson
+                </button>
+<a class="btn-secondary-fixed label-md label-md" href="pricing.html">
+                    View Pricing
+                </a>
+<button class="btn-secondary label-md label-md">
+                    WhatsApp Us
+                </button>
+</div>
+</div>
+<div class="hero-image-container fade-in-up" style="animation-delay: 200ms;">
+<img alt="A professional driving instructor in a modern dual-control car..." class="hero-image" src="assests/images/chatt.png"/>
+</div>
+</section>
+<!-- Features Bento Grid -->
+<section class="section-padded bg-surface-low">
+<div class="container">
+<div class="section-header fade-in-up">
+<h2 class="headline-md headline-md section-title">Why Choose Us</h2>
+</div>
+<div class="grid-3">
+<div class="card fade-in-up" style="animation-delay: 100ms;">
+<div class="icon-box">
+<span class="material-symbols-outlined">drive_eta</span>
+</div>
+<h3 class="title-lg title-lg card-title">Practical Training</h3>
+<p class="body-md body-md card-text">Real-world scenarios and comprehensive road practice to build intuitive driving skills.</p>
+</div>
+<div class="card fade-in-up" style="animation-delay: 200ms;">
+<div class="icon-box">
+<span class="material-symbols-outlined">health_and_safety</span>
+</div>
+<h3 class="title-lg title-lg card-title">Safety First</h3>
+<p class="body-md body-md card-text">Dual-control vehicles and meticulous instruction emphasizing defensive driving techniques.</p>
+</div>
+<div class="card fade-in-up" style="animation-delay: 300ms;">
+<div class="icon-box">
+<span class="material-symbols-outlined">flag</span>
+</div>
+<h3 class="title-lg title-lg card-title">Goal Focused</h3>
+<p class="body-md body-md card-text">Structured lesson plans designed to pass your test efficiently while creating safe lifelong habits.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- About Preview -->
+<section class="container split-section section-padded">
+<div class="split-content fade-in-up">
+<h2 class="headline-md headline-md section-title">Your Journey Starts Here</h2>
+<p class="body-lg body-lg section-subtitle">
+                At Destiny Des, we believe driving is more than passing a test—it's a critical life skill. Our modern approach to instruction focuses on practical instruction, theory lessons and road-focused training, providing clear, actionable feedback, and fostering a supportive environment that turns anxious beginners into confident drivers.
+            </p>
+<a class="btn-secondary-fixed label-md label-md" href="about.html" style="margin-top: 16px; display: inline-block;">
+                Learn More About Us
+            </a>
+</div>
+<div class="split-image fade-in-up" style="animation-delay: 200ms;">
+    <img alt="A professional driving instructor in a modern dual-control car..." class="hero-image" src="assests/images/reee.jpeg"/>
+</div>
+</section>
+<!-- Lessons Preview -->
+<section class="section-padded bg-surface-low">
+<div class="container">
+<div class="section-header-left fade-in-up">
+<h2 class="headline-md headline-md section-title">Our Curriculum</h2>
+<p class="body-md body-md section-subtitle">Tailored instruction for every stage of your journey.</p>
+</div>
+<div class="grid-auto-fit">
+<div class="card card-p-lg fade-in-up">
+<div class="curriculum-header">
+<span class="tag-small label-md label-md">Foundation</span>
+<span class="material-symbols-outlined" style="color: var(--secondary);">drive_eta</span>
+</div>
+<h3 class="title-lg title-lg card-title">Practical Driving Lessons</h3>
+<p class="body-md body-md card-text text-sm">Start from scratch in a low-pressure environment covering all basic controls.</p>
+</div>
+<div class="card card-p-lg fade-in-up" style="animation-delay: 100ms;">
+<div class="curriculum-header">
+<span class="tag-small label-md label-md">Knowledge</span>
+<span class="material-symbols-outlined" style="color: var(--secondary);">menu_book</span>
+</div>
+<h3 class="title-lg title-lg card-title">Theory Lessons</h3>
+<p class="body-md body-md card-text text-sm">Comprehensive classroom sessions to prepare you for the written examination.</p>
+</div>
+<div class="card card-p-lg fade-in-up" style="animation-delay: 200ms;">
+<div class="curriculum-header">
+<span class="tag-small label-md label-md">Test Prep</span>
+<span class="material-symbols-outlined" style="color: var(--secondary);">assignment</span>
+</div>
+<h3 class="title-lg title-lg card-title">Driving Test Preparation</h3>
+<p class="body-md body-md card-text text-sm">Focused practice on test routes and mock exams to ensure you pass with flying colors.</p>
+</div>
+<div class="card card-p-lg fade-in-up" style="animation-delay: 300ms;">
+<div class="curriculum-header">
+<span class="tag-small label-md label-md">Skills</span>
+<span class="material-symbols-outlined" style="color: var(--secondary);">local_parking</span>
+</div>
+<h3 class="title-lg title-lg card-title">Yard Practice</h3>
+<p class="body-md body-md card-text text-sm">Master parallel, reverse, and bay parking with precise reference points.</p>
+</div>
+<div class="card card-p-lg fade-in-up" style="animation-delay: 400ms;">
+<div class="curriculum-header">
+<span class="tag-small label-md label-md">Core</span>
+<span class="material-symbols-outlined" style="color: var(--secondary);">add_road</span>
+</div>
+<h3 class="title-lg title-lg card-title">Road Driving</h3>
+<p class="body-md body-md card-text text-sm">Navigate complex intersections, highways, and dynamic traffic scenarios.</p>
+</div>
+<div class="card card-p-lg fade-in-up" style="animation-delay: 500ms;">
+<div class="curriculum-header">
+<span class="tag-small label-md label-md">Refresh</span>
+<span class="material-symbols-outlined" style="color: var(--secondary);">replay</span>
+</div>
+<h3 class="title-lg title-lg card-title">Refresher Training</h3>
+<p class="body-md body-md card-text text-sm">Brush up on your skills if you haven't driven in a while or want to boost your confidence.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="section-padded">
+<div class="container">
+<div class="section-header fade-in-up">
+<h2 class="headline-md headline-md section-title">How It Works</h2>
+<p class="body-md body-md section-subtitle">Your simple path to getting on the road.</p>
+</div>
+<div class="grid-auto-fit">
+<div class="step-card fade-in-up">
+<div class="step-number headline-sm headline-sm">1</div>
+<h3 class="title-lg title-lg card-title">Create Account</h3>
+<p class="body-md body-md card-text">Sign up on our platform.</p>
+</div>
+<div class="step-card fade-in-up" style="animation-delay: 100ms;">
+<div class="step-number headline-sm headline-sm">2</div>
+<h3 class="title-lg title-lg card-title">Register</h3>
+<p class="body-md body-md card-text">Complete your profile details.</p>
+</div>
+<div class="step-card fade-in-up" style="animation-delay: 200ms;">
+<div class="step-number headline-sm headline-sm">3</div>
+<h3 class="title-lg title-lg card-title">Choose Training</h3>
+<p class="body-md body-md card-text">Select the package that fits you.</p>
+</div>
+<div class="step-card fade-in-up" style="animation-delay: 300ms;">
+<div class="step-number headline-sm headline-sm">4</div>
+<h3 class="title-lg title-lg card-title">Attend Lessons</h3>
+<p class="body-md body-md card-text">Learn from expert instructors.</p>
+</div>
+<div class="step-card fade-in-up" style="animation-delay: 400ms;">
+<div class="step-number headline-sm headline-sm">5</div>
+<h3 class="title-lg title-lg card-title">Prepare for Test</h3>
+<p class="body-md body-md card-text">Mock tests and route practice.</p>
+</div>
+<div class="step-card fade-in-up" style="animation-delay: 500ms;">
+<div class="step-number headline-sm headline-sm">6</div>
+<h3 class="title-lg title-lg card-title">Get on the Road</h3>
+<p class="body-md body-md card-text">Pass your test and drive confidently.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Preview -->
+<section class="section-padded bg-surface-low">
+<div class="container">
+<div class="section-header fade-in-up">
+<h2 class="headline-md headline-md section-title">Simple, Flexible Driving Packages</h2>
+<p class="body-md body-md section-subtitle">Transparent pricing to suit your needs.</p>
+</div>
+<div class="grid-3">
+<div class="card card-p-lg card-centered fade-in-up">
+<h3 class="title-lg title-lg card-title">Manual</h3>
+<div class="display-lg display-lg price-display">P600<span class="body-md body-md price-period">/month</span></div>
+<p class="body-md body-md card-text">Comprehensive manual transmission training.</p>
+</div>
+<div class="card card-p-lg card-centered card-outlined fade-in-up" style="animation-delay: 100ms;">
+<h3 class="title-lg title-lg card-title">Automatic</h3>
+<div class="display-lg display-lg price-display">P750<span class="body-md body-md price-period">/month</span></div>
+<p class="body-md body-md card-text">Easy learning with automatic transmission.</p>
+</div>
+<div class="card card-p-lg card-centered fade-in-up" style="animation-delay: 200ms;">
+<h3 class="title-lg title-lg card-title">Pay Per Lesson</h3>
+<div class="display-lg display-lg price-display">From P150<span class="body-md body-md price-period">/lesson</span></div>
+<p class="body-md body-md card-text">Flexible options for specific needs.</p>
+</div>
+</div>
+<div class="pricing-action fade-in-up" style="animation-delay: 300ms;">
+<a class="btn-secondary-fixed label-md label-md" href="pricing.html">
+                    View Full Pricing <span class="material-symbols-outlined" style="font-size: 16px; margin-left: 4px;">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Student Portal CTA -->
+<section class="container section-padded">
+<div class="cta-box fade-in-up">
+<div class="cta-content">
+<h2 class="headline-md headline-md cta-title">Ready to Start Your Journey?</h2>
+<p class="body-lg body-lg cta-desc">Join our platform to book lessons, track progress, and access learning materials easily.</p>
+</div>
+<button class="btn-cta label-md label-md">
+                Create Your Account
+            </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer>
+<div class="container footer-grid">
+<div class="footer-brand-col">
+<div class="headline-sm headline-sm footer-brand-name">Destiny Des</div>
+<p class="body-md body-md footer-desc">We Drive You To Your Destiny. Premium driving education for the modern learner.</p>
+<p class="body-md body-md footer-copy">© 2026 Destiny Des Driving School. We Drive You To Your Destiny.</p>
+</div>
+<div class="footer-nav-col">
+<h4 class="title-lg title-lg footer-title">Navigation</h4>
+<a class="body-md body-md footer-link" href="index.html">Home</a>
+<a class="body-md body-md footer-link" href="about.html">About</a>
+<a class="body-md body-md footer-link" href="lessons.html">Lessons</a>
+<a class="body-md body-md footer-link" href="pricing.html">Pricing</a>
+<a class="body-md body-md footer-link" href="contact.html">Contact</a>
+</div>
+<div class="footer-nav-col">
+<h4 class="title-lg title-lg footer-title">Legal</h4>
+<a class="body-md body-md footer-link" href="privacy-policy.html">Privacy Policy</a>
+<a class="body-md body-md footer-link" href="terms-of-service.html">Terms of Service</a>
+</div>
+</div>
+</footer>
+<script>
+    // Keep JS simple, animations are CSS based
+</script>
+</body></html>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Our Lessons | Destiny Des Driving School</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            /* Colors */
+            --primary: #000613;
+            --primary-container: #001f3f;
+            --secondary: #0059bb;
+            --secondary-container: #0070ea;
+            --surface: #fbf9f8;
+            --surface-container-low: #f6f3f2;
+            --surface-container: #f0eded;
+            --surface-variant: #e4e2e1;
+            --on-surface: #1b1c1c;
+            --on-surface-variant: #43474e;
+            --on-primary: #ffffff;
+            --on-secondary: #ffffff;
+            --outline-variant: rgba(196, 198, 207, 0.3);
+            
+            /* Typography */
+            --font-heading: 'Lexend', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Spacing */
+            --grid-margin: 20px;
+            --gutter: 24px;
+            --radius: 8px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+        }
+
+        @media (min-width: 768px) {
+            :root {
+                --grid-margin: 80px;
+            }
+        }
+
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--surface);
+            color: var(--on-surface);
+            line-height: 1.5;
+            font-size: 16px;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+
+        /* Typography Classes */
+        h1, h2, h3, .heading {
+            font-family: var(--font-heading);
+            color: var(--primary);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding-left: var(--grid-margin);
+            padding-right: var(--grid-margin);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(251, 249, 248, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 50;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px var(--grid-margin);
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: none;
+            gap: 32px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: var(--on-surface-variant);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a.active {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 4px;
+        }
+
+        .nav-actions {
+            display: none;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-text {
+            color: var(--primary);
+        }
+        
+        .btn-text:hover {
+            background-color: var(--surface-container-low);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--on-primary);
+        }
+
+        .btn-primary:hover {
+            background-color: #1a1f2b;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--on-secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #004ba0;
+        }
+
+        .btn-outline {
+            background-color: rgba(0, 89, 187, 0.1);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(0, 89, 187, 0.2);
+        }
+        
+        .btn-surface {
+            background-color: var(--surface);
+            color: var(--primary);
+        }
+
+        .btn-surface:hover {
+            background-color: var(--surface-variant);
+        }
+
+        .btn-large {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .mobile-menu-btn {
+            display: block;
+            color: var(--primary);
+        }
+
+        @media (min-width: 768px) {
+            .nav-links, .nav-actions {
+                display: flex;
+            }
+            .mobile-menu-btn {
+                display: none;
+            }
+        }
+
+        /* Main Content */
+        main {
+            padding-top: 120px;
+            padding-bottom: 80px;
+        }
+
+        section {
+            margin-bottom: 128px;
+        }
+
+        /* Hero Section */
+        .hero-card {
+            background-color: var(--surface-container-low);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .hero-content {
+            padding: 32px;
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) {
+            .hero-content {
+                padding: 64px;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(0, 89, 187, 0.1);
+            color: var(--secondary);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-title {
+            font-size: 32px;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-title {
+                font-size: 48px;
+            }
+        }
+
+        .hero-text {
+            font-size: 18px;
+            color: var(--on-surface-variant);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            height: 400px;
+            min-height: 500px;
+        }
+
+        @media (min-width: 768px) {
+            .hero-image-wrapper {
+                height: 100%;
+            }
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .hero-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, var(--surface-container-low), transparent);
+        }
+
+        @media (min-width: 768px) {
+            .hero-gradient {
+                width: 33.333%;
+            }
+        }
+
+        /* Services Section */
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--on-surface-variant);
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+
+        .bento-item {
+            background-color: #fff;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: 0px 2px 4px rgba(0, 31, 63, 0.05);
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .bento-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0px 10px 20px rgba(0, 31, 63, 0.08);
+        }
+        
+        .bento-item.bg-primary {
+            background-color: var(--primary);
+            color: var(--on-primary);
+        }
+        
+        .bento-item.bg-primary .bento-title {
+            color: var(--on-primary);
+        }
+        
+        .bento-item.bg-primary .bento-text {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .bento-item.transparent {
+            background-color: transparent;
+            box-shadow: none;
+            border: 1px solid var(--outline-variant);
+            justify-content: center;
+        }
+
+        .col-span-12 { grid-column: span 12; }
+        .col-span-8 { grid-column: span 8; }
+        .col-span-4 { grid-column: span 4; }
+
+        @media (max-width: 767px) {
+            .bento-grid .col-span-8, 
+            .bento-grid .col-span-4 {
+                grid-column: span 12;
+            }
+        }
+
+        .bento-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+        
+        .bento-icon.text-secondary { color: var(--secondary); }
+        .bento-icon.text-secondary-fixed { color: #d8e2ff; }
+
+        .bento-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .bento-text {
+            font-size: 16px;
+            color: var(--on-surface-variant);
+            margin-bottom: 24px;
+        }
+        
+        .bento-text.sm {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .bento-link {
+            color: var(--secondary);
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bento-link span {
+            margin-left: 4px;
+            transition: transform 0.2s;
+        }
+        
+        .bento-link:hover span {
+            transform: translateX(4px);
+        }
+
+        .abstract-shape {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 33%;
+            height: 100%;
+            opacity: 0.1;
+            display: none;
+        }
+        
+        .abstract-shape-inner {
+            width: 100%;
+            height: 100%;
+            background-color: var(--secondary);
+            border-top-left-radius: 9999px;
+            filter: blur(24px);
+        }
+
+        @media (min-width: 768px) {
+            .abstract-shape {
+                display: block;
+            }
+        }
+        
+        .bento-divider {
+            border-top: 1px solid var(--outline-variant);
+            padding-top: 24px;
+            margin-top: 24px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            margin-bottom: 0;
+        }
+
+        .cta-card {
+            background-color: var(--primary);
+            border-radius: var(--radius-xl);
+            padding: 48px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .cta-card {
+                padding: 96px;
+            }
+        }
+
+        .cta-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .cta-title {
+            color: var(--on-primary);
+            font-size: 32px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .cta-title {
+                font-size: 48px;
+            }
+        }
+
+        .cta-text {
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        @media (min-width: 640px) {
+            .cta-actions {
+                flex-direction: row;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary);
+            width: 100%;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 48px 0;
+            color: #fff;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 3fr;
+            }
+        }
+
+        .footer-brand {
+            margin-bottom: 24px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .footer-copy {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .footer-links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-links-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .footer-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.7);
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover, 
+        .footer-col a.active {
+            color: #d8e2ff;
+        }
+        
+        .footer-col a.active {
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<!-- Top Navigation Bar -->
+<nav class="navbar">
+<div class="navbar-content">
+<a class="logo" href="index.html">Destiny Des</a>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a class="active" href="lessons.html">Lessons</a>
+<a href="pricing.html">Pricing</a>
+<a href="contact.html">Contact</a>
+</div>
+<div class="nav-actions">
+<button class="btn btn-text">Login</button>
+<button class="btn btn-primary">Student Portal</button>
+</div>
+<button aria-label="Toggle menu" class="mobile-menu-btn" id="mobile-menu-toggle">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main>
+<!-- Hero Section -->
+<section class="container fade-in-up">
+<div class="hero-card">
+<div class="hero-grid">
+<div class="hero-content">
+<span class="badge">OUR LESSONS</span>
+<h1 class="hero-title">Driving Lessons Designed Around Your Journey</h1>
+<p class="hero-text">Comprehensive practical and theory-based training tailored to build your confidence and ensure safety on the road. We move at your pace.</p>
+<div class="hero-actions">
+<button class="btn btn-primary btn-large">Book a Lesson</button>
+<button class="btn btn-outline btn-large">View Pricing</button>
+</div>
+</div>
+<div class="hero-image-wrapper">
+<img alt="A highly detailed professional photograph of a calm, reassuring driving instructor sitting in the passenger seat of a modern, pristine driving school car." class="hero-image" src="assests/images/tee.jpeg"/>
+<div class="hero-gradient"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Our Services Bento Grid -->
+<section class="container">
+<div class="section-header fade-in-up">
+<h2 class="section-title">Our Services</h2>
+<p class="section-subtitle">Comprehensive training modules covering every aspect of driving, from basic theory to advanced road skills.</p>
+</div>
+<div class="bento-grid fade-in-up delay-100">
+<!-- Practical Driving -->
+<div class="bento-item col-span-8">
+<div style="position: relative; z-index: 10; max-width: 66%;">
+<span class="material-symbols-outlined bento-icon text-secondary">directions_car</span>
+<h3 class="bento-title">Practical Driving Lessons</h3>
+<p class="bento-text">Hands-on experience in modern vehicles with dual controls. Build muscle memory and confidence behind the wheel with our expert instructors.</p>
+<a class="bento-link" href="#">Learn more <span class="material-symbols-outlined">arrow_forward</span></a>
+</div>
+<div class="abstract-shape">
+<div class="abstract-shape-inner"></div>
+</div>
+</div>
+<!-- Theory Lessons -->
+<div class="bento-item col-span-4 bg-primary">
+<span class="material-symbols-outlined bento-icon text-secondary-fixed">menu_book</span>
+<h3 class="bento-title">Theory Lessons</h3>
+<p class="bento-text">Master traffic rules, signs, and defensive driving concepts in our comfortable classrooms.</p>
+</div>
+<!-- Yard Training -->
+<div class="bento-item col-span-4">
+<span class="material-symbols-outlined bento-icon">local_parking</span>
+<h3 class="bento-title">Yard Training</h3>
+<p class="bento-text">Perfect your parking, reversing, and tight maneuvers in a safe, enclosed environment before hitting public roads.</p>
+</div>
+<!-- Road Training -->
+<div class="bento-item col-span-4">
+<span class="material-symbols-outlined bento-icon">add_road</span>
+<h3 class="bento-title">Road Training</h3>
+<p class="bento-text">Navigate real-world traffic, complex intersections, and highway driving under professional supervision.</p>
+</div>
+<!-- Test Prep & Refresher -->
+<div class="bento-item col-span-4 transparent">
+<div>
+<h3 class="bento-title"><span class="material-symbols-outlined text-secondary" style="margin-right: 8px;">verified</span> Test Preparation</h3>
+<p class="bento-text sm">Mock exams and route familiarity to ensure you pass first time.</p>
+</div>
+<div class="bento-divider">
+<h3 class="bento-title"><span class="material-symbols-outlined text-secondary" style="margin-right: 8px;">update</span> Refresher Lessons</h3>
+<p class="bento-text sm">Regain confidence after a long break from driving.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="container cta-section fade-in-up delay-300">
+<div class="cta-card">
+<div class="cta-bg"></div>
+<div class="cta-content">
+<h2 class="cta-title">Ready to Start Driving?</h2>
+<p class="cta-text">Join thousands of successful students who found their confidence on the road with Destiny Des.</p>
+<div class="cta-actions">
+<button class="btn btn-secondary btn-large">Book a Lesson</button>
+<button class="btn btn-surface btn-large">WhatsApp Us</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<div class="container footer-grid">
+<div class="footer-brand">
+<span class="footer-logo">Destiny Des</span>
+<p class="footer-copy">© 2026 Destiny Des Driving School. We Drive You To Your Destiny.</p>
+</div>
+<div class="footer-links-grid">
+<div class="footer-col">
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+</div>
+<div class="footer-col">
+<a class="active" href="lessons.html">Lessons</a>
+<a href="pricing.html">Pricing</a>
+</div>
+<div class="footer-col">
+<a href="contact.html">Contact</a>
+<a href="privacy-policy.html">Privacy Policy</a>
+</div>
+<div class="footer-col">
+<a href="terms-of-service.html">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-toggle');
+            
+            if (menuBtn) {
+                menuBtn.addEventListener('click', () => {
+                    // Mobile menu toggle logic would go here
+                    // Keeping it simple for the layout requirement
+                    const navLinks = document.querySelector('.nav-links');
+                    const navActions = document.querySelector('.nav-actions');
+                    
+                    if (navLinks.style.display === 'flex') {
+                        navLinks.style.display = 'none';
+                        navActions.style.display = 'none';
+                    } else {
+                        navLinks.style.display = 'flex';
+                        navLinks.style.flexDirection = 'column';
+                        navLinks.style.position = 'absolute';
+                        navLinks.style.top = '100%';
+                        navLinks.style.left = '0';
+                        navLinks.style.width = '100%';
+                        navLinks.style.background = 'white';
+                        navLinks.style.padding = '20px';
+                        
+                        navActions.style.display = 'flex';
+                        navActions.style.flexDirection = 'column';
+                        navActions.style.position = 'absolute';
+                        navActions.style.top = 'calc(100% + ' + navLinks.offsetHeight + 'px)';
+                        navActions.style.left = '0';
+                        navActions.style.width = '100%';
+                        navActions.style.background = 'white';
+                        navActions.style.padding = '20px';
+                    }
+                });
+            }
+        });
+    </script>
+</body></html>

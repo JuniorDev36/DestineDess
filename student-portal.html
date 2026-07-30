@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Portal - Destiny Des Driving School</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    :root {
+        --color-primary: #001f3f;
+        --color-secondary: #0059bb;
+        --color-background: #fbf9f8;
+        --color-surface: #ffffff;
+        --color-surface-dim: #e4e2e1;
+        --color-text-main: #1b1c1c;
+        --color-text-muted: #43474e;
+        --color-border: #c4c6cf;
+        --color-error: #ba1a1a;
+        --color-success: #0070ea;
+        --font-heading: 'Lexend', sans-serif;
+        --font-body: 'Inter', sans-serif;
+        --radius: 8px;
+        --spacing-sm: 8px;
+        --spacing-md: 16px;
+        --spacing-lg: 24px;
+        --spacing-xl: 32px;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: var(--font-body);
+        color: var(--color-text-main);
+        background-color: var(--color-background);
+        line-height: 1.5;
+        display: flex;
+        min-height: 100vh;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .sidebar {
+        width: 250px;
+        background-color: var(--color-surface);
+        border-right: 1px solid var(--color-border);
+        display: flex;
+        flex-direction: column;
+        padding: var(--spacing-lg) var(--spacing-md);
+        position: fixed;
+        height: 100vh;
+        left: 0;
+        top: 0;
+    }
+
+    .sidebar-header {
+        margin-bottom: var(--spacing-xl);
+        padding: 0 var(--spacing-sm);
+    }
+
+    .sidebar-header h1 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+        padding: 0 var(--spacing-sm);
+    }
+
+    .user-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: var(--color-surface-dim);
+        overflow: hidden;
+    }
+
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .user-info p {
+        font-size: 14px;
+    }
+
+    .user-name {
+        font-weight: 600;
+        color: var(--color-primary);
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        flex-grow: 1;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--radius);
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--color-text-muted);
+        transition: all 0.2s ease;
+    }
+
+    .nav-link:hover {
+        background-color: var(--color-background);
+        color: var(--color-primary);
+    }
+
+    .nav-link.active {
+        background-color: var(--color-secondary);
+        color: #ffffff;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-sm);
+        background-color: var(--color-primary);
+        color: #ffffff;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--radius);
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        font-size: 14px;
+    }
+
+    .btn:hover {
+        background-color: #001224;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        margin-left: 250px;
+        padding: var(--spacing-xl);
+        max-width: 1000px;
+    }
+
+    .section {
+        background-color: var(--color-surface);
+        border-radius: var(--radius);
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-xl);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        border: 1px solid var(--color-border);
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-lg);
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        background-color: #d8e2ff;
+        color: #001a41;
+    }
+
+    .badge.success {
+        background-color: #d5e4f4;
+        color: #0e1d28;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: var(--spacing-lg);
+    }
+
+    .info-item label {
+        display: block;
+        font-size: 12px;
+        color: var(--color-text-muted);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .info-item div {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--color-primary);
+    }
+
+    .list-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .list-table th, .list-table td {
+        padding: var(--spacing-sm);
+        text-align: left;
+        border-bottom: 1px solid var(--color-surface-dim);
+    }
+
+    .list-table th {
+        font-size: 12px;
+        color: var(--color-text-muted);
+        font-weight: 500;
+    }
+
+    .list-table td {
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 4px;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    .announcement-item {
+        margin-bottom: var(--spacing-md);
+        padding: var(--spacing-md);
+        background-color: var(--color-background);
+        border-radius: var(--radius);
+        border-left: 4px solid var(--color-secondary);
+    }
+
+    .announcement-item h4 {
+        margin-bottom: 4px;
+        font-size: 16px;
+    }
+
+    .announcement-date {
+        font-size: 12px;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    @media (max-width: 768px) {
+        body {
+            flex-direction: column;
+        }
+        .sidebar {
+            width: 100%;
+            height: auto;
+            position: static;
+            padding: var(--spacing-md);
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-links {
+            display: none;
+        }
+        .main-content {
+            margin-left: 0;
+            padding: var(--spacing-md);
+        }
+        .sidebar-header, .user-profile {
+            margin-bottom: 0;
+        }
+        .user-profile {
+            display: none;
+        }
+    }
+</style>
+</head>
+<body>
+<aside class="sidebar">
+<div class="sidebar-header">
+<h1>Student Portal</h1>
+</div>
+<div class="user-profile">
+<div class="user-avatar">
+<img alt="Student Profile Picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRON08r9eKvHgRrjg4TdYkT6ZNcaYtum71QvCmW9g5ZuyE9MQO419rRG_xShU3MRIZsMwqg11Zy94KLhFC4VJTP7PFv15uvhQM_Am0yVOMq1e_ojIv0WDe6Y8OwGDiR7rkZTspIbdnsTeDiTeSLOStrcf8oDthun-VlCsmCNWseJxLmZCOgpYxxNTX977hwax9pwiwjsmZ_k9uTAb8w-4VLFfxXp48FB1PP6DtEE36DQ0AyURmhLOG"/>
+</div>
+<div class="user-info">
+<p>Welcome back,</p>
+<p class="user-name">Alex Driver</p>
+</div>
+</div>
+<nav class="nav-links">
+<a class="nav-link active" href="#dashboard">
+<span class="material-symbols-outlined">dashboard</span>
+            Dashboard
+        </a>
+<a class="nav-link" href="#profile">
+<span class="material-symbols-outlined">person</span>
+            Profile
+        </a>
+<a class="nav-link" href="#registration">
+<span class="material-symbols-outlined">app_registration</span>
+            My Registration
+        </a>
+<a class="nav-link" href="#bookings">
+<span class="material-symbols-outlined">event_note</span>
+            My Bookings
+        </a>
+<a class="nav-link" href="#announcements">
+<span class="material-symbols-outlined">campaign</span>
+            Announcements
+        </a>
+<a class="nav-link" href="#settings">
+<span class="material-symbols-outlined">settings</span>
+            Settings
+        </a>
+</nav>
+<div style="margin-top: auto;">
+<button class="btn" style="width: 100%;">
+<span class="material-symbols-outlined">calendar_add_on</span>
+            Book Lesson
+        </button>
+</div>
+</aside>
+<main class="main-content">
+<section class="section" id="dashboard">
+<div class="section-header">
+<h2>Welcome back, Alex.</h2>
+<span class="badge success">
+<span class="material-symbols-outlined" style="font-size: 16px;">check_circle</span>
+                Registration: Active
+            </span>
+</div>
+<div class="info-grid" style="margin-bottom: var(--spacing-xl);">
+<div class="info-item">
+<label>Selected Package</label>
+<div>Beginner Package (Automatic)</div>
+</div>
+<div class="info-item">
+<label>Next Lesson</label>
+<div>Tomorrow, 10:00 AM</div>
+</div>
+<div class="info-item">
+<label>Instructor</label>
+<div>Sarah Jenkins</div>
+</div>
+<div class="info-item">
+<label>Type</label>
+<div>City Driving</div>
+</div>
+</div>
+</section>
+<section class="section" id="profile">
+<div class="section-header">
+<h2>Profile</h2>
+<button class="btn">Edit</button>
+</div>
+<div class="info-grid">
+<div class="info-item">
+<label>Full Name</label>
+<div>Alex Driver</div>
+</div>
+<div class="info-item">
+<label>Email</label>
+<div>alex.driver@example.com</div>
+</div>
+<div class="info-item">
+<label>Phone</label>
+<div>(555) 123-4567</div>
+</div>
+<div class="info-item">
+<label>Date of Birth</label>
+<div>05/14/2004</div>
+</div>
+<div class="info-item">
+<label>Address</label>
+<div>123 Learning Way, Seattle, WA</div>
+</div>
+</div>
+</section>
+<section class="section" id="registration">
+<div class="section-header">
+<h2>My Registration</h2>
+</div>
+<div class="info-grid">
+<div class="info-item">
+<label>Status</label>
+<div>Approved</div>
+</div>
+<div class="info-item">
+<label>Package</label>
+<div>Beginner 10-Lesson Pack</div>
+</div>
+<div class="info-item">
+<label>Registration Date</label>
+<div>Sep 10, 2024</div>
+</div>
+<div class="info-item">
+<label>Notes</label>
+<div>Permit verified. Ready for practical.</div>
+</div>
+</div>
+</section>
+<section class="section" id="bookings">
+<div class="section-header">
+<h2>My Bookings</h2>
+</div>
+<table class="list-table">
+<thead>
+<tr>
+<th>Date</th>
+<th>Time</th>
+<th>Type</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tomorrow</td>
+<td>10:00 AM</td>
+<td>City Driving</td>
+<td><span class="badge">Upcoming</span></td>
+</tr>
+<tr>
+<td>Oct 12, 2024</td>
+<td>2:00 PM</td>
+<td>Highway Merging</td>
+<td><span class="badge success">Completed</span></td>
+</tr>
+<tr>
+<td>Oct 05, 2024</td>
+<td>9:00 AM</td>
+<td>Parallel Parking</td>
+<td><span class="badge success">Completed</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" id="announcements">
+<div class="section-header">
+<h2>Announcements</h2>
+</div>
+<div class="announcement-item">
+<h4>New Requirement: Permit Upload</h4>
+<div class="announcement-date">Oct 14, 2024</div>
+<p>Please ensure you bring your valid learner's permit copy to your next practical session.</p>
+</div>
+<div class="announcement-item">
+<h4>System Maintenance</h4>
+<div class="announcement-date">Oct 10, 2024</div>
+<p>The booking portal will be down for 2 hours this Sunday at 2 AM EST.</p>
+</div>
+</section>
+<section class="section" id="settings">
+<div class="section-header">
+<h2>Settings</h2>
+</div>
+<div style="max-width: 400px; margin-bottom: var(--spacing-lg);">
+<div class="form-group">
+<label>Current Password</label>
+<input class="form-control" type="password"/>
+</div>
+<div class="form-group">
+<label>New Password</label>
+<input class="form-control" type="password"/>
+</div>
+<button class="btn">Update Password</button>
+</div>
+<hr style="border: 0; border-top: 1px solid var(--color-border); margin: var(--spacing-lg) 0;"/>
+<button class="btn" style="background-color: var(--color-surface); color: var(--color-error); border: 1px solid var(--color-error);">Logout</button>
+</section>
+</main>
+</body></html>

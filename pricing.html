@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pricing | Destiny Des</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            --color-background: #fbf9f8;
+            --color-surface: #fbf9f8;
+            --color-surface-container: #f0eded;
+            --color-surface-container-high: #eae8e7;
+            --color-surface-container-lowest: #ffffff;
+            --color-surface-container-low: #f6f3f2;
+            --color-primary: #000613;
+            --color-primary-container: #001f3f;
+            --color-on-primary-container: #6f88ad;
+            --color-primary-fixed: #d4e3ff;
+            --color-on-primary-fixed: #001c3a;
+            --color-secondary: #0059bb;
+            --color-on-secondary: #ffffff;
+            --color-secondary-container: #0070ea;
+            --color-on-secondary-container: #fefcff;
+            --color-secondary-fixed: #d8e2ff;
+            --color-secondary-fixed-dim: #adc7ff;
+            --color-on-secondary-fixed: #001a41;
+            --color-tertiary-container: #12202b;
+            --color-on-tertiary-container: #798896;
+            --color-on-tertiary-fixed-variant: #3a4855;
+            --color-on-background: #1b1c1c;
+            --color-on-surface: #1b1c1c;
+            --color-on-surface-variant: #43474e;
+            --color-surface-variant: #e4e2e1;
+            --color-outline-variant: #c4c6cf;
+            --color-on-primary: #ffffff;
+
+            --font-inter: 'Inter', sans-serif;
+            --font-lexend: 'Lexend', sans-serif;
+
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --spacing-gutter: 24px;
+            --spacing-grid-margin-desktop: 80px;
+            --spacing-grid-margin-mobile: 20px;
+
+            --shadow-level-1: 0px 2px 4px rgba(0, 31, 63, 0.05);
+            --shadow-level-2: 0px 10px 20px rgba(0, 31, 63, 0.08);
+            --shadow-level-3: 0px 20px 40px rgba(0, 31, 63, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-on-background);
+            font-family: var(--font-inter);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: var(--spacing-grid-margin-desktop);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        /* TopNavBar */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            background-color: rgba(251, 249, 248, 0.8);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px var(--spacing-grid-margin-desktop);
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-lexend);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .nav-link {
+            font-family: var(--font-inter);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--color-on-surface-variant);
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--color-secondary);
+            background-color: var(--color-surface-container-low);
+        }
+
+        .nav-link.active {
+            color: var(--color-secondary);
+            border-bottom: 2px solid var(--color-secondary);
+            padding-bottom: 4px;
+            border-radius: 0;
+        }
+        .nav-link.active:hover {
+             background-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .btn {
+            font-family: var(--font-lexend);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-level-2);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-secondary-container);
+            color: var(--color-on-secondary-container);
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-on-primary);
+            border-radius: 12px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: var(--spacing-xxl) var(--spacing-grid-margin-desktop);
+            gap: var(--spacing-xl);
+        }
+
+        .hero-section {
+            text-align: center;
+            max-width: 768px;
+            margin: 0 auto var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .hero-title {
+            font-family: var(--font-lexend);
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 56px;
+            letter-spacing: 0.02em;
+            color: var(--color-primary);
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-inter);
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 28px;
+            color: var(--color-on-surface-variant);
+        }
+
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-gutter);
+        }
+
+        .pricing-card {
+            background-color: var(--color-surface-container-lowest);
+            border-radius: 24px;
+            padding: var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+            box-shadow: var(--shadow-level-1);
+            border: 1px solid rgba(196, 198, 207, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            box-shadow: var(--shadow-level-2);
+            transform: scale(1.02);
+        }
+
+        .pricing-card.highlight {
+            background-color: var(--color-primary-container);
+            border: 1px solid rgba(212, 227, 255, 0.2);
+            box-shadow: var(--shadow-level-2);
+        }
+        
+        .pricing-card.highlight:hover {
+            box-shadow: var(--shadow-level-3);
+        }
+
+        .card-bg-icon {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: var(--spacing-lg);
+            opacity: 0.1;
+            font-size: 48px;
+            color: var(--color-primary);
+            transition: opacity 0.3s;
+        }
+
+        .pricing-card:hover .card-bg-icon {
+            opacity: 0.2;
+        }
+
+        .pricing-card.highlight .card-bg-icon {
+            color: var(--color-primary-fixed);
+        }
+
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            position: relative;
+            z-index: 10;
+        }
+
+        .card-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .icon-blue-light {
+            background-color: var(--color-secondary-fixed-dim);
+            color: var(--color-on-secondary-fixed);
+        }
+
+        .icon-blue-dark {
+            background-color: var(--color-secondary);
+            color: var(--color-on-secondary);
+        }
+
+        .icon-grey {
+            background-color: var(--color-surface-container-high);
+            color: var(--color-on-surface);
+        }
+
+        .card-title {
+            font-family: var(--font-inter);
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 28px;
+            color: var(--color-primary);
+        }
+
+        .pricing-card.highlight .card-title {
+            color: var(--color-on-primary-container);
+        }
+
+        .card-pricing-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .pricing-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(196, 198, 207, 0.2);
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .pricing-card.highlight .pricing-item {
+            border-bottom-color: rgba(212, 227, 255, 0.2);
+        }
+
+        .pricing-label {
+            font-family: var(--font-inter);
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 24px;
+            color: var(--color-on-surface);
+        }
+
+        .pricing-card.highlight .pricing-label {
+            color: var(--color-on-primary-container);
+        }
+
+        .pricing-value {
+            font-family: var(--font-inter);
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 28px;
+            color: var(--color-primary);
+        }
+
+        .pricing-card.highlight .pricing-value {
+            color: var(--color-on-primary-container);
+        }
+
+        /* Disclaimer */
+        .disclaimer-banner {
+            margin-top: var(--spacing-xl);
+            background-color: var(--color-surface-container-low);
+            border-radius: 16px;
+            padding: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid rgba(196, 198, 207, 0.2);
+        }
+
+        .disclaimer-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .disclaimer-icon {
+            color: var(--color-secondary);
+        }
+
+        .disclaimer-text {
+            font-family: var(--font-inter);
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            color: var(--color-on-surface);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-primary);
+            color: var(--color-on-primary);
+            width: 100%;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            border-top: 1px solid rgba(196, 198, 207, 0.1);
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: var(--spacing-gutter);
+            padding: var(--spacing-xxl) var(--spacing-grid-margin-desktop);
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .footer-logo {
+            font-family: var(--font-lexend);
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 32px;
+            color: var(--color-on-primary);
+        }
+
+        .footer-slogan {
+            font-family: var(--font-inter);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-surface-variant);
+        }
+
+        .footer-links-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .footer-title {
+            font-family: var(--font-inter);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .footer-link {
+            font-family: var(--font-inter);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-surface-variant);
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--color-secondary-fixed);
+        }
+
+        .footer-link.active {
+            color: var(--color-secondary-fixed);
+            font-weight: 700;
+        }
+
+        .footer-copyright {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            text-align: right;
+            justify-content: flex-end;
+        }
+
+        .copyright-text {
+            font-family: var(--font-inter);
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--color-surface-variant);
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 16px var(--spacing-grid-margin-mobile);
+            }
+            .nav-links {
+                display: none;
+            }
+            .btn-secondary {
+                display: none;
+            }
+            .main-content {
+                padding: var(--spacing-xxl) var(--spacing-grid-margin-mobile);
+            }
+            .hero-title {
+                font-size: 32px;
+                line-height: 40px;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+                padding: var(--spacing-xxl) var(--spacing-grid-margin-mobile);
+            }
+            .footer-copyright {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- TopNavBar -->
+<header class="header">
+<div class="header-content">
+<div class="logo">
+                Destiny Des
+            </div>
+<nav class="nav-links">
+<a class="nav-link" href="index.html">Home</a>
+<a class="nav-link" href="about.html">About</a>
+<a class="nav-link" href="lessons.html">Lessons</a>
+<a class="nav-link active" href="pricing.html">Pricing</a>
+<a class="nav-link" href="contact.html">Contact</a>
+</nav>
+<div class="header-actions">
+<button class="btn btn-secondary">Student Portal</button>
+<button class="btn btn-primary">Login</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="main-content">
+<!-- Header Section -->
+<section class="hero-section">
+<h1 class="hero-title">Invest in Your Independence</h1>
+<p class="hero-subtitle">Clear, straightforward options tailored to your learning pace. Contact us to find the perfect plan for your journey on the road.</p>
+</section>
+<!-- Pricing Groups -->
+<section class="pricing-grid">
+<!-- Card 1: Monthly Payments -->
+<article class="pricing-card">
+<div class="card-bg-icon">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: inherit;">calendar_month</span>
+</div>
+<div class="card-header">
+<div class="card-icon-wrapper icon-blue-light">
+<span class="material-symbols-outlined">calendar_month</span>
+</div>
+<h2 class="card-title">Monthly Payments</h2>
+</div>
+<div class="card-pricing-list">
+<div class="pricing-item">
+<span class="pricing-label">Manual</span>
+<span class="pricing-value">P600.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">Automatic</span>
+<span class="pricing-value">P750.00</span>
+</div>
+</div>
+</article>
+<!-- Card 2: Practical Lessons -->
+<article class="pricing-card highlight">
+<div class="card-bg-icon">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: inherit;">directions_car</span>
+</div>
+<div class="card-header">
+<div class="card-icon-wrapper icon-blue-dark">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<h2 class="card-title">Practical Lessons</h2>
+</div>
+<div class="card-pricing-list">
+<div class="pricing-item">
+<span class="pricing-label">3 Weeks</span>
+<span class="pricing-value">P550.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">2 Weeks</span>
+<span class="pricing-value">P450.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">1 Week</span>
+<span class="pricing-value">P350.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">Single Lesson</span>
+<span class="pricing-value">P150.00</span>
+</div>
+</div>
+</article>
+<!-- Card 3: Booking Fees (Students) -->
+<article class="pricing-card">
+<div class="card-bg-icon">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: inherit;">school</span>
+</div>
+<div class="card-header">
+<div class="card-icon-wrapper icon-blue-light">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h2 class="card-title">Booking Fees (Students)</h2>
+</div>
+<div class="card-pricing-list">
+<div class="pricing-item">
+<span class="pricing-label">Theory</span>
+<span class="pricing-value">P150.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">Yard</span>
+<span class="pricing-value">P400.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">Road</span>
+<span class="pricing-value">P400.00</span>
+</div>
+</div>
+</article>
+<!-- Card 4: Booking Fees (Non-Students) -->
+<article class="pricing-card">
+<div class="card-bg-icon">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: inherit;">person</span>
+</div>
+<div class="card-header">
+<div class="card-icon-wrapper icon-grey">
+<span class="material-symbols-outlined">person</span>
+</div>
+<h2 class="card-title">Booking Fees (Non-Students)</h2>
+</div>
+<div class="card-pricing-list">
+<div class="pricing-item">
+<span class="pricing-label">Theory</span>
+<span class="pricing-value">P200.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">Yard</span>
+<span class="pricing-value">P500.00</span>
+</div>
+<div class="pricing-item">
+<span class="pricing-label">Road</span>
+<span class="pricing-value">P500.00</span>
+</div>
+</div>
+</article>
+</section>
+<!-- Pricing Disclaimer Banner -->
+<section class="disclaimer-banner">
+<div class="disclaimer-content">
+<span class="material-symbols-outlined disclaimer-icon">info</span>
+<p class="disclaimer-text">Contact us for the latest pricing and package availability.</p>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-brand">
+<div class="footer-logo">
+                    Destiny Des
+                </div>
+<p class="footer-slogan">We Drive You To Your Destiny.</p>
+</div>
+<div class="footer-links-section">
+<h3 class="footer-title">Quick Links</h3>
+<nav class="footer-nav">
+<a class="footer-link" href="index.html">Home</a>
+<a class="footer-link" href="about.html">About</a>
+<a class="footer-link" href="lessons.html">Lessons</a>
+<a class="footer-link active" href="pricing.html">Pricing</a>
+<a class="footer-link" href="contact.html">Contact</a>
+<a class="footer-link" href="privacy.html">Privacy Policy</a>
+<a class="footer-link" href="terms.html">Terms of Service</a>
+</nav>
+</div>
+<div class="footer-copyright">
+<p class="copyright-text">
+                    © 2026 Destiny Des Driving School.<br/>We Drive You To Your Destiny.
+                </p>
+</div>
+</div>
+</footer>
+</body></html>
