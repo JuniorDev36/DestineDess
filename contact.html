@@ -492,7 +492,116 @@
             font-variation-settings: 'FILL' 1;
         }
     </style>
-</head>
+<style>
+        /* Mobile Navigation Styles */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            padding: 10px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--primary);
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none !important;
+                position: fixed;
+                top: 72px;
+                left: 0;
+                width: 100%;
+                background: var(--background);
+                flex-direction: column;
+                padding: 40px 20px;
+                gap: 24px;
+                text-align: center;
+                border-bottom: 1px solid var(--outline);
+                box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            }
+
+            body.menu-open .nav-links {
+                display: flex !important;
+            }
+
+            body.menu-open .menu-toggle span:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            body.menu-open .menu-toggle span:nth-child(2) {
+                opacity: 0;
+            }
+
+            body.menu-open .menu-toggle span:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .nav-actions {
+                display: none;
+            }
+
+            /* Mobile Typography & Spacing */
+            .hero {
+                padding-top: 100px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 48px 0;
+            }
+
+            /* Bento Grid Stacking */
+            .bento-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            /* Form Adjustments */
+            .contact-form-card {
+                padding: 24px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr !important;
+            }
+
+            .submit-btn {
+                padding: 18px;
+                font-size: 1rem;
+            }
+
+            /* Footer */
+            footer {
+                padding: 48px 20px;
+                text-align: center;
+            }
+
+            .footer-col {
+                margin-bottom: 32px;
+            }
+        }
+    </style></head>
 <body>
 <header>
 <nav>
@@ -504,7 +613,11 @@
 <li><a href="pricing.html">Pricing</a></li>
 <li><a class="active" href="contact.html">Contact</a></li>
 </ul>
-<div class="nav-actions">
+<button aria-label="Toggle Menu" class="menu-toggle" onclick="document.body.classList.toggle('menu-open')">
+<span></span>
+<span></span>
+<span></span>
+</button><div class="nav-actions">
 <button class="btn-text">Login</button>
 <button class="btn-primary">Student Portal</button>
 </div>
@@ -588,7 +701,7 @@
 <div class="contact-form-card">
 <h2 style="margin-bottom: 32px;">Send us a Message</h2>
 <form id="contactForm">
-<div class="form-row">
+<div class="form-row mobile-stack">
 <div class="form-group">
 <label for="name">Full Name</label>
 <input id="name" placeholder="John Doe" required="" type="text"/>
@@ -669,11 +782,11 @@
 <h4>Support</h4>
 <a href="pricing.html">Pricing</a>
 <a href="contact.html" style="color: #d8e2ff; font-weight: 700;">Contact</a>
-<a href="privacy-policy.html">Privacy Policy</a>
+<a href="privacy.html">Privacy Policy</a>
 </div>
 <div class="footer-col">
 <h4>Legal</h4>
-<a href="terms-of-service.html">Terms of Service</a>
+<a href="terms.html">Terms of Service</a>
 <div style="display: flex; gap: 16px; margin-top: 16px;">
 <span class="material-symbols-outlined" style="cursor: pointer;">qr_code_2</span>
 <span class="material-symbols-outlined" style="cursor: pointer;">language</span>
@@ -724,4 +837,10 @@
         style.innerHTML = `@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`;
         document.head.appendChild(style);
     </script>
-</body></html>
+<script>
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.body.classList.remove('menu-open');
+            });
+        });
+    </script></body></html>

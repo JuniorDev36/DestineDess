@@ -459,9 +459,257 @@
             color: var(--color-secondary-fixed);
             font-weight: bold;
         }
-    </style>
+    
+/* Mobile Hamburger Navigation */
+.mobile-header,
+.mobile-menu,
+.mobile-menu-backdrop {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .mobile-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: 68px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(196, 198, 207, 0.45);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .mobile-brand {
+        font-family: var(--font-display);
+        font-size: 21px;
+        font-weight: 700;
+        color: var(--color-primary-dark);
+    }
+
+    .hamburger-btn {
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(196, 198, 207, 0.8);
+        border-radius: 12px;
+        background: var(--color-surface);
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .hamburger-btn span {
+        width: 20px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--color-primary-dark);
+        transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .hamburger-btn.is-open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger-btn.is-open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-btn.is-open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-menu-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        display: block;
+        background: rgba(0, 6, 19, 0.38);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .mobile-menu-backdrop.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 95;
+        width: min(88vw, 360px);
+        height: 100dvh;
+        padding: 22px 18px 24px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        background: var(--color-surface);
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.12);
+        transform: translateX(105%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+    }
+
+    .mobile-menu.is-open {
+        transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(196, 198, 207, 0.45);
+    }
+
+    .mobile-menu-title {
+        font-family: var(--font-display);
+        font-size: 21px;
+        font-weight: 600;
+        color: var(--color-primary-dark);
+    }
+
+    .mobile-menu-close {
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 12px;
+        background: var(--color-surface-container-low);
+        color: var(--color-primary-dark);
+        font-size: 30px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 22px 0;
+    }
+
+    .mobile-menu-link {
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--color-text-variant);
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .mobile-menu-link.active,
+    .mobile-menu-link:hover {
+        background: rgba(0, 112, 234, 0.08);
+        color: var(--color-secondary);
+    }
+
+    .mobile-menu-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid rgba(196, 198, 207, 0.45);
+    }
+
+    .mobile-menu-login,
+    .mobile-menu-cta {
+        width: 100%;
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border-radius: var(--radius-xl);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .mobile-menu-login {
+        background: transparent;
+        color: var(--color-primary-dark);
+    }
+
+    main {
+        padding-top: 68px;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-header,
+    .mobile-menu,
+    .mobile-menu-backdrop {
+        display: none !important;
+    }
+}
+
+</style>
 </head>
 <body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+  <a class="mobile-brand" href="index.html">Destiny Des</a>
+  <button class="hamburger-btn" id="hamburgerBtn" type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-header">
+    <span class="mobile-menu-title">Menu</span>
+    <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close navigation menu">×</button>
+  </div>
+
+  <div class="mobile-menu-links">
+    <a class="mobile-menu-link" href="index.html">Home</a>
+    <a class="mobile-menu-link active" href="about.html">About</a>
+    <a class="mobile-menu-link" href="lessons.html">Lessons</a>
+    <a class="mobile-menu-link" href="pricing.html">Pricing</a>
+    <a class="mobile-menu-link" href="contact.html">Contact</a>
+  </div>
+
+  <div class="mobile-menu-actions">
+    <a class="mobile-menu-login" href="login.html">Login</a>
+    <a class="btn btn-primary mobile-menu-cta" href="register.html">Create Account</a>
+  </div>
+</nav>
+
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+<div id="mobile-overlay">
+<button class="mobile-menu-toggle mobile-close" onclick="document.getElementById('mobile-overlay').classList.remove('active')">
+<span class="material-symbols-outlined">close</span>
+</button>
+<a class="mobile-link" href="index.html">Home</a>
+<a class="mobile-link active" href="about.html">About</a>
+<a class="mobile-link" href="lessons.html">Lessons</a>
+<a class="mobile-link" href="pricing.html">Pricing</a>
+<a class="mobile-link" href="contact.html">Contact</a>
+<a class="mobile-link" href="login.html" style="margin-top: auto; color: var(--color-secondary);">Login</a>
+</div>
 <!-- TopNavBar -->
 <nav class="navbar">
 <div class="container navbar-content">
@@ -485,7 +733,7 @@
 <main>
 <!-- Hero Section -->
 <section class="hero-section">
-<div class="hero-bg">
+<div class="hero-bg mobile-hero-bg">
 <img alt="Hero background" data-alt="A modern, high-quality photograph of a learner driver confidently holding the steering wheel in a contemporary, clean car interior. The lighting is bright and optimistic, showcasing a sunny day outside the window. The overall aesthetic is professional, safe, and premium, utilizing a color palette that emphasizes clean whites, soft grays, and subtle hints of navy blue. The mood is encouraging and focused." src="assests/images/yee.jpeg"/>
 </div>
 <div class="container hero-content">
@@ -597,10 +845,56 @@
 <h4 class="footer-title font-display">Support</h4>
 <ul class="footer-links">
 <li><a href="contact.html">Contact</a></li>
-<li><a href="privacy-policy.html">Privacy Policy</a></li>
-<li><a href="terms-of-service.html">Terms of Service</a></li>
+<li><a href="privacy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
 </ul>
 </div>
 </div>
 </footer>
+
+<script>
+(function () {
+    const button = document.getElementById('hamburgerBtn');
+    const menu = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('mobileMenuBackdrop');
+    const closeButton = document.getElementById('mobileMenuClose');
+    const links = document.querySelectorAll('.mobile-menu-link');
+
+    if (!button || !menu || !backdrop || !closeButton) return;
+
+    function openMenu() {
+        menu.classList.add('is-open');
+        backdrop.classList.add('is-visible');
+        button.classList.add('is-open');
+        button.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        menu.classList.remove('is-open');
+        backdrop.classList.remove('is-visible');
+        button.classList.remove('is-open');
+        button.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    button.addEventListener('click', () => {
+        menu.classList.contains('is-open') ? closeMenu() : openMenu();
+    });
+
+    closeButton.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    links.forEach(link => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu.classList.contains('is-open')) {
+            closeMenu();
+        }
+    });
+})();
+</script>
+
 </body></html>

@@ -918,9 +918,193 @@
   }
 }
 
+
+/* Mobile hamburger navigation */
+.mobile-header, .mobile-menu, .mobile-menu-backdrop { display:none; }
+
+@media (max-width: 767px) {
+  body { padding-bottom: 0; }
+
+  .mobile-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-sizing: border-box;
+    background: rgba(251,249,248,.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(196,198,207,.45);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mobile-brand {
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .hamburger-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0;
+  }
+
+  .hamburger-btn span {
+    width: 20px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 999px;
+    transition: transform .25s ease, opacity .2s ease;
+  }
+
+  .hamburger-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger-btn.is-open span:nth-child(2) { opacity: 0; }
+  .hamburger-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: block;
+    background: rgba(0,6,19,.38);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .mobile-menu-backdrop.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 0; right: 0;
+    z-index: 95;
+    width: min(88vw, 360px);
+    height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 18px 24px;
+    background: var(--surface);
+    box-shadow: -12px 0 30px rgba(0,0,0,.12);
+    transform: translateX(105%);
+    transition: transform .3s ease;
+    overflow-y: auto;
+  }
+  .mobile-menu.is-open { transform: translateX(0); }
+
+  .mobile-menu-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--surface-container-highest);
+  }
+
+  .mobile-menu-close {
+    width:42px; height:42px;
+    border-radius:12px;
+    background:var(--surface-container-low);
+    color:var(--primary);
+    font-size:30px;
+    line-height:1;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .mobile-menu-links {
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    padding:22px 0;
+  }
+
+  .mobile-menu-link {
+    display:flex;
+    align-items:center;
+    min-height:52px;
+    padding:0 14px;
+    border-radius:12px;
+    font-size:17px;
+    font-weight:500;
+    color:var(--on-surface-variant);
+  }
+
+  .mobile-menu-link.active,
+  .mobile-menu-link:hover {
+    background:rgba(0,89,187,.08);
+    color:var(--secondary);
+  }
+
+  .mobile-menu-actions {
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:auto;
+    padding-top:20px;
+    border-top:1px solid var(--surface-container-highest);
+  }
+
+  .mobile-menu-login, .mobile-menu-cta {
+    width:100%;
+    min-height:50px;
+    box-sizing:border-box;
+    justify-content:center;
+    text-align:center;
+  }
+
+  .mobile-nav { display:none !important; }
+  main { padding-top:88px; }
+}
+
+@media (min-width: 768px) {
+  .mobile-header, .mobile-menu, .mobile-menu-backdrop { display:none !important; }
+}
+
 </style>
 </head>
 <body>
+
+<header class="mobile-header">
+  <a class="mobile-brand headline-sm" href="index.html">Destiny Des</a>
+  <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-header">
+    <span class="headline-sm">Menu</span>
+    <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close navigation menu">×</button>
+  </div>
+  <div class="mobile-menu-links">
+    <a class="mobile-menu-link active" href="index.html">Home</a>
+    <a class="mobile-menu-link" href="about.html">About</a>
+    <a class="mobile-menu-link" href="lessons.html">Lessons</a>
+    <a class="mobile-menu-link" href="pricing.html">Pricing</a>
+    <a class="mobile-menu-link" href="contact.html">Contact</a>
+  </div>
+  <div class="mobile-menu-actions">
+    <a class="btn-text mobile-menu-login" href="login.html">Login</a>
+    <a class="btn-primary mobile-menu-cta" href="register.html">Create Account</a>
+  </div>
+</nav>
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+
 <!-- TopNavBar -->
 <nav class="navbar">
 <div class="container navbar-content">
@@ -1025,7 +1209,7 @@
             </a>
 </div>
 <div class="split-image fade-in-up" style="animation-delay: 200ms;">
-    <img alt="A professional driving instructor in a modern dual-control car..." class="hero-image" src="assests/images/reee.jpeg"/>
+    <img alt="A professional driving instructor in a modern dual-control car..." class="hero-image" src="assests/images/yee.jpeg"/>
 </div>
 </section>
 <!-- Lessons Preview -->
@@ -1198,4 +1382,47 @@
 <script>
     // Keep JS simple, animations are CSS based
 </script>
+
+<script>
+(function () {
+  const button = document.getElementById('hamburgerBtn');
+  const menu = document.getElementById('mobileMenu');
+  const backdrop = document.getElementById('mobileMenuBackdrop');
+  const closeButton = document.getElementById('mobileMenuClose');
+  const links = document.querySelectorAll('.mobile-menu-link');
+
+  if (!button || !menu || !backdrop || !closeButton) return;
+
+  function openMenu() {
+    menu.classList.add('is-open');
+    backdrop.classList.add('is-visible');
+    button.classList.add('is-open');
+    button.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menu.classList.remove('is-open');
+    backdrop.classList.remove('is-visible');
+    button.classList.remove('is-open');
+    button.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  button.addEventListener('click', () => {
+    menu.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  closeButton.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  links.forEach(link => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
+  });
+})();
+</script>
+
 </body></html>
