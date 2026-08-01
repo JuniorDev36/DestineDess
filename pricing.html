@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Pricing | Destiny Des</title>
+<title>Pricing | Destiny Dess</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style>
@@ -93,6 +93,12 @@
             backdrop-filter: blur(12px);
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
             transition: all 0.3s;
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .header {
+                display: block;
+            }
         }
 
         .header-content {
@@ -516,13 +522,218 @@
             }
         }
     </style>
-<style>@media (max-width: 768px) { .header-content { padding: 16px var(--spacing-grid-margin-mobile); } .nav-links { display: none; } .mobile-menu-toggle { display: block !important; } #mobile-overlay.active { display: flex !important; } .main-content { padding: var(--spacing-xxl) var(--spacing-grid-margin-mobile); } .hero-title { font-size: 32px; line-height: 40px; } .pricing-grid { grid-template-columns: 1fr; } .btn { padding: 12px 24px; min-height: 48px; } .footer-content { grid-template-columns: 1fr; padding: var(--spacing-xxl) var(--spacing-grid-margin-mobile); } .footer-copyright { text-align: left; } }</style></head>
-<body><div id="mobile-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-background); z-index: 100; flex-direction: column; align-items: center; justify-content: center; gap: 24px;"><button onclick="document.getElementById('mobile-overlay').classList.toggle('active')" style="position: absolute; top: 20px; right: 20px; background: none; color: var(--color-primary);"><span class="material-symbols-outlined">close</span></button><a class="nav-link" href="index.html" style="font-size: 20px;">Home</a><a class="nav-link" href="about.html" style="font-size: 20px;">About</a><a class="nav-link" href="lessons.html" style="font-size: 20px;">Lessons</a><a class="nav-link active" href="pricing.html" style="font-size: 20px;">Pricing</a><a class="nav-link" href="contact.html" style="font-size: 20px;">Contact</a></div>
+<style>@media (max-width: 768px) { .header-content { padding: 16px var(--spacing-grid-margin-mobile); } .main-content { padding: var(--spacing-xxl) var(--spacing-grid-margin-mobile); } .hero-title { font-size: 32px; line-height: 40px; } .pricing-grid { grid-template-columns: 1fr; } .btn { padding: 12px 24px; min-height: 48px; } .footer-content { grid-template-columns: 1fr; padding: var(--spacing-xxl) var(--spacing-grid-margin-mobile); } .footer-copyright { text-align: left; } }
+
+/* Mobile hamburger navigation (matches home page exactly) */
+.mobile-header, .mobile-menu, .mobile-menu-backdrop { display: none; }
+
+@media (max-width: 767px) {
+  .mobile-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    box-sizing: border-box;
+    background: rgba(251,249,248,.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(196,198,207,.45);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+
+  .mobile-brand {
+    font-family: var(--font-lexend);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .hamburger-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-outline-variant);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0;
+  }
+
+  .hamburger-btn span {
+    width: 20px;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 999px;
+    transition: transform .25s ease, opacity .2s ease;
+  }
+
+  .hamburger-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger-btn.is-open span:nth-child(2) { opacity: 0; }
+  .hamburger-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: block;
+    background: rgba(0,6,19,.38);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .mobile-menu-backdrop.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 0; right: 0;
+    z-index: 95;
+    width: min(88vw, 360px);
+    height: 100dvh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 18px 24px;
+    background: var(--color-surface-container-lowest);
+    box-shadow: -12px 0 30px rgba(0,0,0,.12);
+    transform: translateX(105%);
+    transition: transform .3s ease;
+    overflow-y: auto;
+  }
+  .mobile-menu.is-open { transform: translateX(0); }
+
+  .mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(196,198,207,.45);
+  }
+
+  .mobile-menu-title {
+    font-family: var(--font-lexend);
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .mobile-menu-close {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: var(--color-surface-variant);
+    color: var(--color-primary);
+    font-size: 30px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+  }
+
+  .mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 22px 0;
+  }
+
+  .mobile-menu-link {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    padding: 0 14px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--color-on-surface-variant);
+  }
+
+  .mobile-menu-link.active,
+  .mobile-menu-link:hover {
+    background: rgba(0,89,187,.08);
+    color: var(--color-secondary);
+  }
+
+  .mobile-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(196,198,207,.45);
+  }
+
+  .mobile-menu-login, .mobile-menu-cta {
+    width: 100%;
+    min-height: 50px;
+    box-sizing: border-box;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .mobile-menu-login {
+    background: transparent;
+    color: var(--color-primary);
+  }
+
+  main { padding-top: 88px; }
+}
+
+@media (min-width: 768px) {
+  .mobile-header, .mobile-menu, .mobile-menu-backdrop {
+    display: none !important;
+  }
+}
+</style></head>
+<body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+  <a class="mobile-brand" href="index.html">Destiny Dess</a>
+  <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-header">
+    <span class="mobile-menu-title">Menu</span>
+    <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close navigation menu">×</button>
+  </div>
+  <div class="mobile-menu-links">
+    <a class="mobile-menu-link" href="index.html">Home</a>
+    <a class="mobile-menu-link" href="about.html">About</a>
+    <a class="mobile-menu-link" href="lessons.html">Lessons</a>
+    <a class="mobile-menu-link active" href="pricing.html">Pricing</a>
+    <a class="mobile-menu-link" href="contact.html">Contact</a>
+  </div>
+  <div class="mobile-menu-actions">
+    <a class="mobile-menu-login" href="login.html">Login</a>
+    <a class="btn btn-primary mobile-menu-cta" href="register.html">Create Account</a>
+  </div>
+</nav>
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+
 <!-- TopNavBar -->
 <header class="header">
 <div class="header-content">
 <div class="logo">
-                Destiny Des
+                Destiny Dess
             </div>
 <nav class="nav-links">
 <a class="nav-link" href="index.html">Home</a>
@@ -531,7 +742,7 @@
 <a class="nav-link active" href="pricing.html">Pricing</a>
 <a class="nav-link" href="contact.html">Contact</a>
 </nav>
-<div class="header-actions"><button class="mobile-menu-toggle" onclick="document.getElementById('mobile-overlay').classList.toggle('active')" style="display: none; background: none; color: var(--color-primary); padding: 8px;"><span class="material-symbols-outlined">menu</span></button>
+<div class="header-actions">
 <button class="btn btn-secondary" style="min-width: 44px; min-height: 44px;">Student Portal</button>
 <button class="btn btn-primary" style="min-width: 44px; min-height: 44px;">Login</button>
 </div>
@@ -664,7 +875,7 @@
 <div class="footer-content">
 <div class="footer-brand">
 <div class="footer-logo">
-                    Destiny Des
+                    Destiny Dess
                 </div>
 <p class="footer-slogan">We Drive You To Your Destiny.</p>
 </div>
@@ -682,9 +893,50 @@
 </div>
 <div class="footer-copyright">
 <p class="copyright-text">
-                    © 2026 Destiny Des Driving School.<br/>We Drive You To Your Destiny.
+                    © 2026 Destiny Dess Driving School.<br/>We Drive You To Your Destiny.
                 </p>
 </div>
 </div>
 </footer>
+<script>
+(function () {
+  const button = document.getElementById('hamburgerBtn');
+  const menu = document.getElementById('mobileMenu');
+  const backdrop = document.getElementById('mobileMenuBackdrop');
+  const closeButton = document.getElementById('mobileMenuClose');
+  const links = document.querySelectorAll('.mobile-menu-link');
+
+  if (!button || !menu || !backdrop || !closeButton) return;
+
+  function openMenu() {
+    menu.classList.add('is-open');
+    backdrop.classList.add('is-visible');
+    button.classList.add('is-open');
+    button.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menu.classList.remove('is-open');
+    backdrop.classList.remove('is-visible');
+    button.classList.remove('is-open');
+    button.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  button.addEventListener('click', () => {
+    menu.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  closeButton.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  links.forEach(link => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
+  });
+})();
+</script>
 </body></html>

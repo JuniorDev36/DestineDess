@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Contact Us | Destiny Des Driving School</title>
+<title>Contact Us | Destiny Dess Driving School</title>
 <!-- External Fonts and Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -464,6 +464,9 @@
         }
 
         @media (max-width: 768px) {
+            header {
+                display: none;
+            }
             nav {
                 padding: 0 20px;
             }
@@ -493,64 +496,165 @@
         }
     </style>
 <style>
-        /* Mobile Navigation Styles */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            background: none;
-            border: none;
-            padding: 10px;
-            z-index: 1001;
-        }
+        /* Mobile hamburger navigation (matches home page exactly) */
+        .mobile-header, .mobile-menu, .mobile-menu-backdrop { display: none; }
 
-        .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 2px;
-            background-color: var(--primary);
-            transition: 0.3s;
-        }
-
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .nav-links {
-                display: none !important;
+        @media (max-width: 767px) {
+            .mobile-header {
                 position: fixed;
-                top: 72px;
-                left: 0;
-                width: 100%;
-                background: var(--background);
+                top: 0; left: 0; right: 0;
+                z-index: 100;
+                height: 68px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 16px;
+                box-sizing: border-box;
+                background: rgba(251,249,248,.92);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border-bottom: 1px solid rgba(196,198,207,.45);
+                box-shadow: var(--shadow);
+            }
+
+            .mobile-brand {
+                font-family: var(--font-display);
+                font-size: 24px;
+                font-weight: 700;
+                color: var(--primary);
+            }
+
+            .hamburger-btn {
+                width: 46px;
+                height: 46px;
+                border-radius: 12px;
+                background: var(--surface);
+                border: 1px solid var(--outline);
+                display: inline-flex;
                 flex-direction: column;
-                padding: 40px 20px;
-                gap: 24px;
-                text-align: center;
-                border-bottom: 1px solid var(--outline);
-                box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+                align-items: center;
+                justify-content: center;
+                gap: 5px;
+                padding: 0;
             }
 
-            body.menu-open .nav-links {
-                display: flex !important;
+            .hamburger-btn span {
+                width: 20px;
+                height: 2px;
+                background: var(--primary);
+                border-radius: 999px;
+                transition: transform .25s ease, opacity .2s ease;
             }
 
-            body.menu-open .menu-toggle span:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
-            }
+            .hamburger-btn.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+            .hamburger-btn.is-open span:nth-child(2) { opacity: 0; }
+            .hamburger-btn.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-            body.menu-open .menu-toggle span:nth-child(2) {
+            .mobile-menu-backdrop {
+                position: fixed;
+                inset: 0;
+                z-index: 90;
+                display: block;
+                background: rgba(0,6,19,.38);
                 opacity: 0;
+                pointer-events: none;
+                transition: opacity .25s ease;
+            }
+            .mobile-menu-backdrop.is-visible {
+                opacity: 1;
+                pointer-events: auto;
             }
 
-            body.menu-open .menu-toggle span:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
+            .mobile-menu {
+                position: fixed;
+                top: 0; right: 0;
+                z-index: 95;
+                width: min(88vw, 360px);
+                height: 100dvh;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                padding: 22px 18px 24px;
+                background: var(--surface);
+                box-shadow: -12px 0 30px rgba(0,0,0,.12);
+                transform: translateX(105%);
+                transition: transform .3s ease;
+                overflow-y: auto;
+            }
+            .mobile-menu.is-open { transform: translateX(0); }
+
+            .mobile-menu-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 20px;
+                border-bottom: 1px solid var(--outline);
             }
 
-            .nav-actions {
-                display: none;
+            .mobile-menu-title {
+                font-family: var(--font-display);
+                font-size: 24px;
+                font-weight: 600;
+                color: var(--primary);
             }
+
+            .mobile-menu-close {
+                width: 42px; height: 42px;
+                border-radius: 12px;
+                background: var(--surface-variant);
+                color: var(--primary);
+                font-size: 30px;
+                line-height: 1;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border: none;
+            }
+
+            .mobile-menu-links {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                padding: 22px 0;
+            }
+
+            .mobile-menu-link {
+                display: flex;
+                align-items: center;
+                min-height: 52px;
+                padding: 0 14px;
+                border-radius: 12px;
+                font-size: 17px;
+                font-weight: 500;
+                color: var(--text-muted);
+            }
+
+            .mobile-menu-link.active,
+            .mobile-menu-link:hover {
+                background: rgba(0,89,187,.08);
+                color: var(--secondary);
+            }
+
+            .mobile-menu-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: auto;
+                padding-top: 20px;
+                border-top: 1px solid var(--outline);
+            }
+
+            .mobile-menu-login, .mobile-menu-cta {
+                width: 100%;
+                min-height: 50px;
+                box-sizing: border-box;
+                justify-content: center;
+                text-align: center;
+                display: flex;
+                align-items: center;
+            }
+
+            main { padding-top: 88px; }
 
             /* Mobile Typography & Spacing */
             .hero {
@@ -601,11 +705,46 @@
                 margin-bottom: 32px;
             }
         }
+
+        @media (min-width: 768px) {
+            .mobile-header, .mobile-menu, .mobile-menu-backdrop {
+                display: none !important;
+            }
+        }
     </style></head>
 <body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+  <a class="mobile-brand" href="index.html">Destiny Dess</a>
+  <button class="hamburger-btn" id="hamburgerBtn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-header">
+    <span class="mobile-menu-title">Menu</span>
+    <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close navigation menu">×</button>
+  </div>
+  <div class="mobile-menu-links">
+    <a class="mobile-menu-link" href="index.html">Home</a>
+    <a class="mobile-menu-link" href="about.html">About</a>
+    <a class="mobile-menu-link" href="lessons.html">Lessons</a>
+    <a class="mobile-menu-link" href="pricing.html">Pricing</a>
+    <a class="mobile-menu-link active" href="contact.html">Contact</a>
+  </div>
+  <div class="mobile-menu-actions">
+    <a class="btn-text mobile-menu-login" href="login.html">Login</a>
+    <a class="btn-primary mobile-menu-cta" href="register.html">Create Account</a>
+  </div>
+</nav>
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+
 <header>
 <nav>
-<div class="logo">Destiny Des</div>
+<div class="logo">Destiny Dess</div>
 <ul class="nav-links">
 <li><a href="index.html">Home</a></li>
 <li><a href="about.html">About</a></li>
@@ -613,11 +752,7 @@
 <li><a href="pricing.html">Pricing</a></li>
 <li><a class="active" href="contact.html">Contact</a></li>
 </ul>
-<button aria-label="Toggle Menu" class="menu-toggle" onclick="document.body.classList.toggle('menu-open')">
-<span></span>
-<span></span>
-<span></span>
-</button><div class="nav-actions">
+<div class="nav-actions">
 <button class="btn-text">Login</button>
 <button class="btn-primary">Student Portal</button>
 </div>
@@ -629,7 +764,7 @@
 <section class="hero fade-in">
 <span class="section-tag">Contact Us</span>
 <h1>Let's Get You on the Road.</h1>
-<p>Have a question about our lessons, pricing or registration? Get in touch with Destiny Des Driving School and take the next step toward your driving journey.</p>
+<p>Have a question about our lessons, pricing or registration? Get in touch with Destiny Dess Driving School and take the next step toward your driving journey.</p>
 </section>
 <!-- Info Bento Grid -->
 <section class="fade-in">
@@ -695,7 +830,7 @@
 <img alt="Driving Lesson" src="assests/images/dee.jpeg"/>
 <div class="image-overlay">
 <h3>Safe. Precise. Modern.</h3>
-<p style="opacity: 0.8; font-size: 0.875rem;">Join thousands of successful drivers who started their journey with Destiny Des.</p>
+<p style="opacity: 0.8; font-size: 0.875rem;">Join thousands of successful drivers who started their journey with Destiny Dess.</p>
 </div>
 </div>
 <div class="contact-form-card">
@@ -759,7 +894,7 @@
 <section class="final-cta fade-in">
 <div class="container">
 <h2>Ready to Start Your Driving Journey?</h2>
-<p>Get in touch with Destiny Des Driving School today and transform from a learner to a confident driver.</p>
+<p>Get in touch with Destiny Dess Driving School today and transform from a learner to a confident driver.</p>
 <div class="cta-buttons">
 <button class="btn pill-button" style="border-radius: var(--radius-sm); margin-top: 0; padding: 12px 48px;">Book a Lesson</button>
 <a class="btn btn-outline" href="https://wa.me/26774817112" target="_blank">WhatsApp Us</a>
@@ -769,8 +904,8 @@
 </main>
 <footer>
 <div class="footer-col">
-<div class="footer-logo">Destiny Des</div>
-<p style="opacity: 0.7; font-size: 0.875rem;">© 2024 Destiny Des Driving School. We Drive You To Your Destiny.</p>
+<div class="footer-logo">Destiny Dess</div>
+<p style="opacity: 0.7; font-size: 0.875rem;">© 2024 Destiny Dess Driving School. We Drive You To Your Destiny.</p>
 </div>
 <div class="footer-col">
 <h4>Quick Links</h4>
@@ -838,9 +973,44 @@
         document.head.appendChild(style);
     </script>
 <script>
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.body.classList.remove('menu-open');
-            });
-        });
-    </script></body></html>
+(function () {
+  const button = document.getElementById('hamburgerBtn');
+  const menu = document.getElementById('mobileMenu');
+  const backdrop = document.getElementById('mobileMenuBackdrop');
+  const closeButton = document.getElementById('mobileMenuClose');
+  const links = document.querySelectorAll('.mobile-menu-link');
+
+  if (!button || !menu || !backdrop || !closeButton) return;
+
+  function openMenu() {
+    menu.classList.add('is-open');
+    backdrop.classList.add('is-visible');
+    button.classList.add('is-open');
+    button.setAttribute('aria-expanded', 'true');
+    menu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menu.classList.remove('is-open');
+    backdrop.classList.remove('is-visible');
+    button.classList.remove('is-open');
+    button.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  button.addEventListener('click', () => {
+    menu.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+
+  closeButton.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  links.forEach(link => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
+  });
+})();
+</script>
+</body></html>
