@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us - Destiny Dess Driving School</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            /* Colors */
+            --color-primary: #001f3f;
+            --color-primary-dark: #000613;
+            --color-secondary: #0070ea;
+            --color-secondary-fixed: #d8e2ff;
+            --color-secondary-fixed-dim: #adc7ff;
+            --color-on-secondary-fixed: #001a41;
+            --color-background: #fbf9f8;
+            --color-surface: #ffffff;
+            --color-surface-alt: #fbf9f8;
+            --color-surface-container-low: #f6f3f2;
+            --color-text-main: #1b1c1c;
+            --color-text-variant: #43474e;
+            --color-white: #ffffff;
+            --color-border: rgba(196, 198, 207, 0.1);
+
+            /* Typography */
+            --font-display: 'Lexend', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            /* Spacing */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --spacing-grid-desktop: 80px;
+            --spacing-grid-mobile: 20px;
+            --spacing-gutter: 24px;
+
+            /* Shadows & Radii */
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-full: 9999px;
+            --shadow-sm: 0px 2px 4px rgba(0, 31, 63, 0.05);
+            --shadow-md: 0px 10px 20px rgba(0, 31, 63, 0.08);
+        }
+
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text-main);
+            background-color: var(--color-background);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, .font-display {
+            font-family: var(--font-display);
+            color: var(--color-primary-dark);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 var(--spacing-grid-mobile);
+            max-width: 1440px;
+        }
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-grid-desktop);
+            }
+        }
+
+        .text-center { text-align: center; }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background-color: var(--color-primary-dark);
+            color: var(--color-white);
+        }
+        .btn-primary:hover {
+            background-color: rgba(0, 6, 19, 0.9);
+            transform: translateY(-1px);
+        }
+        .btn-text {
+            background: transparent;
+            color: var(--color-primary-dark);
+        }
+        .btn-text:hover {
+            background-color: var(--color-surface-container-low);
+        }
+        .btn-large {
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-xl);
+        }
+        .btn-secondary-fixed {
+            background-color: var(--color-secondary-fixed);
+            color: var(--color-on-secondary-fixed);
+        }
+        .btn-secondary-fixed:hover {
+            background-color: var(--color-secondary-fixed-dim);
+            transform: translateY(-1px);
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+        }
+        .navbar-brand {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+        }
+        .navbar-links {
+            display: none;
+            gap: var(--spacing-gutter);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .navbar-links a {
+            color: var(--color-text-variant);
+            transition: color 0.2s;
+        }
+        .navbar-links a:hover {
+            color: var(--color-secondary);
+        }
+        .navbar-links a.active {
+            color: var(--color-secondary);
+            border-bottom: 2px solid var(--color-secondary);
+            padding-bottom: 4px;
+        }
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        @media (min-width: 768px) {
+            .navbar-links { display: flex; }
+        }
+
+        /* Main Content */
+        main {
+            flex-grow: 1;
+            padding-top: 80px; /* Offset for navbar */
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            min-height: 614px;
+            display: flex;
+            align-items: center;
+            background-color: var(--color-surface-container-low);
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            mix-blend-mode: overlay;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-gutter);
+        }
+        @media (min-width: 768px) {
+            .hero-grid { grid-template-columns: repeat(12, 1fr); }
+            .hero-card-wrapper { grid-column: span 8; }
+        }
+        @media (min-width: 1024px) {
+            .hero-card-wrapper { grid-column: span 6; }
+        }
+        .hero-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+        }
+        .hero-badge {
+            display: inline-block;
+            padding: var(--spacing-xs) var(--spacing-md);
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: 0.05em;
+        }
+        .hero-title {
+            font-size: 32px;
+            line-height: 1.25;
+            margin-bottom: var(--spacing-md);
+            font-weight: 700;
+        }
+        @media (min-width: 768px) {
+            .hero-title { font-size: 48px; line-height: 56px; }
+        }
+        .hero-text {
+            font-size: 18px;
+            color: var(--color-text-variant);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* Who We Are */
+        .who-we-are {
+            padding: var(--spacing-xxl) 0;
+            background-color: var(--color-background);
+        }
+        .who-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-xxl);
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .who-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .section-title {
+            font-size: 32px;
+            margin-bottom: var(--spacing-md);
+            font-weight: 600;
+        }
+        .section-text {
+            font-size: 16px;
+            color: var(--color-text-variant);
+            margin-bottom: var(--spacing-md);
+        }
+        .who-image {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            height: 400px;
+        }
+        .who-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Our Approach */
+        .our-approach {
+            padding: var(--spacing-xxl) 0;
+            background-color: var(--color-surface-container-low);
+        }
+        .approach-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .approach-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-gutter);
+        }
+        @media (min-width: 768px) {
+            .approach-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .approach-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        .approach-card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+        .approach-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: scale(1.02);
+        }
+        .approach-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--color-secondary-fixed);
+            color: var(--color-on-secondary-fixed);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+        }
+        .approach-card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Commitment */
+        .commitment {
+            padding: var(--spacing-xxl) 0;
+            background-color: var(--color-primary-dark);
+            color: var(--color-white);
+            text-align: center;
+        }
+        .commitment-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .commitment-icon {
+            font-size: 48px;
+            color: var(--color-secondary-fixed);
+            opacity: 0.5;
+            margin-bottom: var(--spacing-md);
+        }
+        .commitment blockquote {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-white);
+        }
+
+        /* Final CTA */
+        .final-cta {
+            padding: var(--spacing-xxl) 0;
+            background-color: var(--color-background);
+            text-align: center;
+        }
+        .final-cta-text {
+            font-size: 18px;
+            color: var(--color-text-variant);
+            margin-bottom: var(--spacing-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .final-cta-actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        @media (min-width: 640px) {
+            .final-cta-actions { flex-direction: row; }
+            .final-cta-actions .btn { width: auto; }
+        }
+        .final-cta-actions .btn { width: 100%; }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-primary-dark);
+            color: var(--color-white);
+            padding: var(--spacing-xxl) 0;
+            border-top: 1px solid var(--color-border);
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            margin-top: auto;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-gutter);
+        }
+        @media (min-width: 768px) {
+            .footer-grid { grid-template-columns: repeat(4, 1fr); }
+            .footer-main { grid-column: span 2; }
+        }
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+        .footer-desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 300px;
+            margin-bottom: var(--spacing-lg);
+        }
+        .footer-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--color-secondary-fixed);
+        }
+        .footer-links a.active {
+            color: var(--color-secondary-fixed);
+            font-weight: bold;
+        }
+    
+/* Mobile Hamburger Navigation */
+.mobile-header,
+.mobile-menu,
+.mobile-menu-backdrop {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    .mobile-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: 68px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(196, 198, 207, 0.45);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .mobile-brand {
+        font-family: var(--font-display);
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--color-primary-dark);
+    }
+
+    .hamburger-btn {
+        width: 46px;
+        height: 46px;
+        border: 1px solid rgba(196, 198, 207, 0.8);
+        border-radius: 12px;
+        background: var(--color-surface);
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .hamburger-btn span {
+        width: 20px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--color-primary-dark);
+        transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .hamburger-btn.is-open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger-btn.is-open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger-btn.is-open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .mobile-menu-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        display: block;
+        background: rgba(0, 6, 19, 0.38);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .mobile-menu-backdrop.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 95;
+        width: min(88vw, 360px);
+        height: 100dvh;
+        padding: 22px 18px 24px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        background: var(--color-surface);
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.12);
+        transform: translateX(105%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+    }
+
+    .mobile-menu.is-open {
+        transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(196, 198, 207, 0.45);
+    }
+
+    .mobile-menu-title {
+        font-family: var(--font-display);
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--color-primary-dark);
+    }
+
+    .mobile-menu-close {
+        width: 42px;
+        height: 42px;
+        border: none;
+        border-radius: 12px;
+        background: var(--color-surface-container-low);
+        color: var(--color-primary-dark);
+        font-size: 30px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 22px 0;
+    }
+
+    .mobile-menu-link {
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        border-radius: 12px;
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--color-text-variant);
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .mobile-menu-link.active,
+    .mobile-menu-link:hover {
+        background: rgba(0, 112, 234, 0.08);
+        color: var(--color-secondary);
+    }
+
+    .mobile-menu-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 20px;
+        border-top: 1px solid rgba(196, 198, 207, 0.45);
+    }
+
+    .mobile-menu-login,
+    .mobile-menu-cta {
+        width: 100%;
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        border-radius: var(--radius-xl);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .mobile-menu-login {
+        background: transparent;
+        color: var(--color-primary-dark);
+        transition: color 0.2s ease;
+    }
+
+    .mobile-menu-login:hover {
+        color: var(--color-secondary);
+    }
+
+    main {
+        padding-top: 68px;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-header,
+    .mobile-menu,
+    .mobile-menu-backdrop {
+        display: none !important;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<!-- Mobile Header -->
+<header class="mobile-header">
+  <a class="mobile-brand" href="index.html">Destiny Dess</a>
+  <button class="hamburger-btn" id="hamburgerBtn" type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- Mobile Navigation Menu -->
+<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-header">
+    <span class="mobile-menu-title">Menu</span>
+    <button class="mobile-menu-close" id="mobileMenuClose" type="button" aria-label="Close navigation menu">×</button>
+  </div>
+
+  <div class="mobile-menu-links">
+    <a class="mobile-menu-link" href="index.html">Home</a>
+    <a class="mobile-menu-link active" href="about.html">About</a>
+    <a class="mobile-menu-link" href="lessons.html">Lessons</a>
+    <a class="mobile-menu-link" href="pricing.html">Pricing</a>
+    <a class="mobile-menu-link" href="contact.html">Contact</a>
+  </div>
+
+  <div class="mobile-menu-actions">
+    <a class="mobile-menu-login" href="login.html">Login</a>
+    <a class="btn btn-primary mobile-menu-cta" href="register.html">Create Account</a>
+  </div>
+</nav>
+
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+<!-- TopNavBar -->
+<nav class="navbar">
+<div class="container navbar-content">
+<div class="navbar-brand">
+            Destiny Dess
+        </div>
+<div class="navbar-links">
+<a href="index.html">Home</a>
+<a class="active" href="about.html">About</a>
+<a href="lessons.html">Lessons</a>
+<a href="pricing.html">Pricing</a>
+<a href="contact.html">Contact</a>
+</div>
+<div class="navbar-actions">
+<button class="btn btn-text hidden-md">Login</button>
+<button class="btn btn-primary">Student Portal</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main>
+<!-- Hero Section -->
+<section class="hero-section">
+<div class="hero-bg mobile-hero-bg">
+<img alt="Hero background" data-alt="A modern, high-quality photograph of a learner driver confidently holding the steering wheel in a contemporary, clean car interior. The lighting is bright and optimistic, showcasing a sunny day outside the window. The overall aesthetic is professional, safe, and premium, utilizing a color palette that emphasizes clean whites, soft grays, and subtle hints of navy blue. The mood is encouraging and focused." src="/assets/yee-KJomhDdo.jpeg"/>
+</div>
+<div class="container hero-content">
+<div class="hero-grid">
+<div class="hero-card-wrapper">
+<div class="hero-card">
+<span class="hero-badge">ABOUT DESTINY DES</span>
+<h1 class="hero-title">Your Journey Starts Here.</h1>
+<p class="hero-text">Driving is about more than simply passing a test. Destiny Dess Driving School focuses on helping learners become confident, responsible and capable drivers through patient instruction, practical training and safe driving habits.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Who We Are -->
+<section class="who-we-are">
+<div class="container who-grid">
+<div>
+<h2 class="section-title">Building Confidence Behind the Wheel</h2>
+<p class="section-text">At Destiny Dess Driving School, we believe that a strong foundation in driving principles is essential for lifelong safety on the road. Our approach is grounded in real-world experience, designed to eliminate anxiety and build genuine competence.</p>
+<p class="section-text">We don't just teach you how to operate a vehicle; we teach you how to anticipate, react, and navigate the complex environment of modern roads with absolute confidence.</p>
+</div>
+<div class="who-image">
+<img alt="Instructor and student" data-alt="A professional driving instructor and a student sitting together in a modern car, looking at a clipboard or tablet with a friendly, supportive interaction. The environment is well-lit, suggesting a safe, structured learning environment. The style is clean and modern, emphasizing trust, patience, and premium educational quality. Colors lean towards deep navy and crisp white." src="/assets/leee-Dmes5fLw.jpeg"/>
+</div>
+</div>
+</section>
+<!-- Our Approach -->
+<section class="our-approach">
+<div class="container">
+<div class="approach-header">
+<h2 class="section-title">Our Approach</h2>
+<p class="section-text">Structured, personalized learning designed for your success.</p>
+</div>
+<div class="approach-grid">
+<!-- Card 1 -->
+<div class="approach-card">
+<div class="approach-icon">
+<span class="material-symbols-outlined filled" data-icon="psychology">psychology</span>
+</div>
+<h3 class="approach-card-title font-display">Patient Coaching</h3>
+<p class="section-text">Every learner develops at a different pace, so instruction should be patient and supportive.</p>
+</div>
+<!-- Card 2 -->
+<div class="approach-card">
+<div class="approach-icon">
+<span class="material-symbols-outlined filled" data-icon="card_travel">card_travel</span>
+</div>
+<h3 class="approach-card-title font-display">Practical Training</h3>
+<p class="section-text">Learners build skills through real driving experience rather than theory alone.</p>
+</div>
+<!-- Card 3 -->
+<div class="approach-card">
+<div class="approach-icon">
+<span class="material-symbols-outlined filled" data-icon="menu_book">menu_book</span>
+</div>
+<h3 class="approach-card-title font-display">Learn the Why</h3>
+<p class="section-text">Students should understand why proper driving habits and road rules matter.</p>
+</div>
+<!-- Card 4 -->
+<div class="approach-card">
+<div class="approach-icon">
+<span class="material-symbols-outlined filled" data-icon="trending_up">trending_up</span>
+</div>
+<h3 class="approach-card-title font-display">Focused Progress</h3>
+<p class="section-text">Training can focus on areas where an individual learner needs more practice.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Our Commitment -->
+<section class="commitment">
+<div class="container commitment-content">
+<span class="material-symbols-outlined commitment-icon" data-icon="format_quote">format_quote</span>
+<blockquote>
+                Helping learners develop the confidence and skills they need to become safer, more responsible drivers.
+            </blockquote>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="final-cta">
+<div class="container">
+<h2 class="section-title">Ready to Start Your Driving Journey?</h2>
+<p class="final-cta-text">Join hundreds of successful students who have gained their independence on the road with Destiny Dess.</p>
+<div class="final-cta-actions">
+<button class="btn btn-primary btn-large">Book a Lesson</button>
+<button class="btn btn-secondary-fixed btn-large">Contact Us</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<div class="container footer-grid">
+<div class="footer-main">
+<div class="footer-brand">Destiny Dess</div>
+<p class="footer-desc">© 2026 Destiny Dess Driving School. We Drive You To Your Destiny.</p>
+</div>
+<div>
+<h4 class="footer-title font-display">Quick Links</h4>
+<ul class="footer-links">
+<li><a href="index.html">Home</a></li>
+<li><a class="active" href="about.html">About</a></li>
+<li><a href="lessons.html">Lessons</a></li>
+<li><a href="pricing.html">Pricing</a></li>
+</ul>
+</div>
+<div>
+<h4 class="footer-title font-display">Support</h4>
+<ul class="footer-links">
+<li><a href="contact.html">Contact</a></li>
+<li><a href="privacy.html">Privacy Policy</a></li>
+<li><a href="terms.html">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+</footer>
+
+<script>
+(function () {
+    const button = document.getElementById('hamburgerBtn');
+    const menu = document.getElementById('mobileMenu');
+    const backdrop = document.getElementById('mobileMenuBackdrop');
+    const closeButton = document.getElementById('mobileMenuClose');
+    const links = document.querySelectorAll('.mobile-menu-link');
+
+    if (!button || !menu || !backdrop || !closeButton) return;
+
+    function openMenu() {
+        menu.classList.add('is-open');
+        backdrop.classList.add('is-visible');
+        button.classList.add('is-open');
+        button.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        menu.classList.remove('is-open');
+        backdrop.classList.remove('is-visible');
+        button.classList.remove('is-open');
+        button.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    button.addEventListener('click', () => {
+        menu.classList.contains('is-open') ? closeMenu() : openMenu();
+    });
+
+    closeButton.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    links.forEach(link => link.addEventListener('click', closeMenu));
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu.classList.contains('is-open')) {
+            closeMenu();
+        }
+    });
+})();
+</script>
+
+</body></html>
