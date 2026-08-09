@@ -12,6 +12,8 @@ export default defineConfig({
         contact: resolve(__dirname, "contact.html"),
         login: resolve(__dirname, "login.html"),
         register: resolve(__dirname, "register.html"),
+        forgotPassword: resolve(__dirname, "forgot-password.html"),
+        studentPortal: resolve(__dirname, "student-portal.html"),
         privacy: resolve(__dirname, "privacy.html"),
         terms: resolve(__dirname, "terms.html"),
       },
