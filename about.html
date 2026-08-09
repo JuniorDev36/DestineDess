@@ -151,6 +151,12 @@
             width: 100%;
             z-index: 50;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .navbar {
+                display: block;
+            }
         }
         .navbar-content {
             display: flex;
@@ -718,8 +724,8 @@
 <a href="contact.html">Contact</a>
 </div>
 <div class="navbar-actions">
-<button class="btn btn-text hidden-md">Login</button>
-<button class="btn btn-primary">Student Portal</button>
+<a class="btn btn-text hidden-md" href="login.html">Login</a>
+<a class="btn btn-primary" href="student-portal.html">Student Portal</a>
 </div>
 </div>
 </nav>
@@ -734,7 +740,7 @@
 <div class="hero-grid">
 <div class="hero-card-wrapper">
 <div class="hero-card">
-<span class="hero-badge">ABOUT DESTINY DES</span>
+<span class="hero-badge">ABOUT DESTINY DESS</span>
 <h1 class="hero-title">Your Journey Starts Here.</h1>
 <p class="hero-text">Driving is about more than simply passing a test. Destiny Dess Driving School focuses on helping learners become confident, responsible and capable drivers through patient instruction, practical training and safe driving habits.</p>
 </div>

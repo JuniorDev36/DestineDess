@@ -1,8 +1,8 @@
 // register.js
-// Handles the Sign Up form for Destiny Dess Driving School.
-// Clerk authentication is NOT implemented yet — this file validates the
-// form client-side and leaves clearly marked placeholders so Clerk can be
-// dropped in with minimal changes.
+// Handles the Sign Up form for Destiny Dess Driving School, wired to Clerk.
+
+import { getClerk } from './clerk-client.js';
+import { getSupabase } from './supabase-client.js';
 
 // ---------------------------------------------------------------------------
 // DOM references (looked up once, no repeated lookups)
@@ -20,12 +20,22 @@ const passwordMismatch = document.getElementById('passwordMismatch');
 const passwordStrength = document.getElementById('passwordStrength');
 const termsCheckbox = document.getElementById('terms');
 
+const verificationStep = document.getElementById('verificationStep');
+const verificationCodeInput = document.getElementById('verificationCode');
+const verificationError = document.getElementById('verificationError');
+const verifyButton = document.getElementById('verifyButton');
+const resendCodeBtn = document.getElementById('resendCodeBtn');
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const STRENGTH_LABELS = {
     weak: 'Weak 🔴',
     medium: 'Medium 🟡',
     strong: 'Strong 🟢',
 };
+
+// Holds the in-progress Clerk SignUp resource between the initial submit
+// and the verification step.
+let pendingSignUp = null;
 
 // ---------------------------------------------------------------------------
 // Message helpers
@@ -48,6 +58,16 @@ function showSuccess(message) {
 function clearSuccess() {
     signupSuccess.textContent = '';
     signupSuccess.style.display = 'none';
+}
+
+function showVerificationError(message) {
+    verificationError.textContent = message;
+    verificationError.style.display = 'block';
+}
+
+function clearVerificationError() {
+    verificationError.textContent = '';
+    verificationError.style.display = 'none';
 }
 
 // ---------------------------------------------------------------------------
@@ -104,6 +124,14 @@ function passwordsMatch() {
     return passwordInput.value === confirmPasswordInput.value;
 }
 
+// Clerk's create() call wants firstName/lastName rather than one field.
+function splitFullName(fullName) {
+    const parts = fullName.trim().split(/\s+/);
+    const firstName = parts.shift() || '';
+    const lastName = parts.join(' ');
+    return { firstName, lastName };
+}
+
 // ---------------------------------------------------------------------------
 // Live UI updates
 // ---------------------------------------------------------------------------
@@ -131,15 +159,23 @@ function updatePasswordMismatch() {
     }
 }
 
-function setButtonLoading(isLoading) {
-    signupButton.disabled = isLoading;
-    signupButton.style.opacity = isLoading ? '0.6' : '';
-    signupButton.style.cursor = isLoading ? 'not-allowed' : '';
+function setButtonLoading(button, isLoading, loadingText, defaultText) {
+    button.disabled = isLoading;
+    button.style.opacity = isLoading ? '0.6' : '';
+    button.style.cursor = isLoading ? 'not-allowed' : '';
 
-    const label = signupButton.querySelector('span:not(.material-symbols-outlined)');
+    const label = button.querySelector('span:not(.material-symbols-outlined)');
     if (label) {
-        label.textContent = isLoading ? 'Creating Account...' : 'Create Account';
+        label.textContent = isLoading ? loadingText : defaultText;
     }
+}
+
+function showVerificationStep() {
+    signupForm.style.display = 'none';
+    clearError();
+    clearSuccess();
+    verificationStep.style.display = 'block';
+    verificationCodeInput.focus();
 }
 
 // ---------------------------------------------------------------------------
@@ -149,7 +185,7 @@ function setButtonLoading(isLoading) {
 // Live password strength indicator
 passwordInput.addEventListener('input', updatePasswordStrength);
 
-// Live password mismatch detection (existing behavior, preserved)
+// Live password mismatch detection
 confirmPasswordInput.addEventListener('input', updatePasswordMismatch);
 
 // Clear error/success messaging as soon as the user starts correcting a field
@@ -159,6 +195,8 @@ confirmPasswordInput.addEventListener('input', updatePasswordMismatch);
         clearSuccess();
     });
 });
+
+verificationCodeInput.addEventListener('input', clearVerificationError);
 
 signupForm.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -190,28 +228,103 @@ signupForm.addEventListener('submit', async function (e) {
         return;
     }
 
-    setButtonLoading(true);
+    setButtonLoading(signupButton, true, 'Creating Account...', 'Create Account');
 
     try {
+        const clerk = await getClerk();
+        const { firstName, lastName } = splitFullName(fullNameInput.value);
+
         // Create Sign Up
-        // TODO: Call Clerk's signUp.create() with fullNameInput.value,
-        // emailInput.value, and passwordInput.value once Clerk is integrated.
+        pendingSignUp = await clerk.client.signUp.create({
+            firstName,
+            lastName,
+            emailAddress: emailInput.value.trim(),
+            password: passwordInput.value,
+        });
 
         // Email Verification
-        // TODO: Trigger Clerk's email verification flow (e.g.
-        // signUp.prepareEmailAddressVerification()) and handle the
-        // verification code step if required.
+        await pendingSignUp.prepareEmailAddressVerification({ strategy: 'email_code' });
 
-        // Create Session
-        // TODO: Once verification succeeds, activate the Clerk session
-        // (e.g. setActive({ session: signUp.createdSessionId })).
-
-        // Redirect to student-portal.html
-        // TODO: window.location.href = "student-portal.html";
-
+        showVerificationStep();
     } catch (err) {
-        showError(err?.message || 'Something went wrong. Please try again.');
+        const message = err?.errors?.[0]?.longMessage || err?.message || 'Something went wrong. Please try again.';
+        showError(message);
     } finally {
-        setButtonLoading(false);
+        setButtonLoading(signupButton, false, 'Creating Account...', 'Create Account');
+    }
+});
+
+verifyButton.addEventListener('click', async function () {
+    clearVerificationError();
+
+    const code = verificationCodeInput.value.trim();
+    if (!code) {
+        showVerificationError('Please enter the verification code.');
+        return;
+    }
+
+    if (!pendingSignUp) {
+        showVerificationError('Your sign-up session expired. Please start again.');
+        return;
+    }
+
+    setButtonLoading(verifyButton, true, 'Verifying...', 'Verify Email');
+
+    try {
+        const clerk = await getClerk();
+        const result = await pendingSignUp.attemptEmailAddressVerification({ code });
+
+        if (result.status === 'complete') {
+            // Create Session
+            await clerk.setActive({ session: result.createdSessionId });
+
+            // Create the student's profile row in Supabase. This is
+            // best-effort — if it fails, student-portal.js will retry
+            // creating the row the next time the dashboard loads, so a
+            // hiccup here doesn't block the student from reaching the
+            // portal.
+            try {
+                const supabase = getSupabase();
+                await supabase.from('student_profiles').upsert(
+                    {
+                        clerk_user_id: clerk.user.id,
+                        full_name: fullNameInput.value.trim(),
+                        email: emailInput.value.trim(),
+                    },
+                    { onConflict: 'clerk_user_id' }
+                );
+            } catch (profileErr) {
+                console.error('Could not create student profile:', profileErr);
+            }
+
+            // Redirect to student-portal.html
+            window.location.href = 'student-portal.html';
+        } else {
+            showVerificationError('That code didn\'t work. Please check it and try again.');
+        }
+    } catch (err) {
+        const message = err?.errors?.[0]?.longMessage || err?.message || 'Verification failed. Please try again.';
+        showVerificationError(message);
+    } finally {
+        setButtonLoading(verifyButton, false, 'Verifying...', 'Verify Email');
+    }
+});
+
+resendCodeBtn.addEventListener('click', async function () {
+    if (!pendingSignUp) {
+        showVerificationError('Your sign-up session expired. Please start again.');
+        return;
+    }
+
+    clearVerificationError();
+    setButtonLoading(resendCodeBtn, true, 'Sending...', 'Resend code');
+
+    try {
+        await pendingSignUp.prepareEmailAddressVerification({ strategy: 'email_code' });
+    } catch (err) {
+        const message = err?.errors?.[0]?.longMessage || err?.message || 'Could not resend the code. Please try again.';
+        showVerificationError(message);
+    } finally {
+        setButtonLoading(resendCodeBtn, false, 'Sending...', 'Resend code');
     }
 });

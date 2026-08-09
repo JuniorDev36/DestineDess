@@ -3,11 +3,19 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Sign Up | Destiny Des Driving School</title>
+<title>Login | Destiny Dess Driving School</title>
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
 <!-- Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Clerk -->
+<script
+async
+crossorigin="anonymous"
+data-clerk-publishable-key="pk_test_aW50ZW5zZS1zaHJldy04NS5jbGVyay5hY2NvdW50cy5kZXYk"
+src="https://intense-shrew-85.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+type="text/javascript"
+></script>
 <style>
         /* CSS Reset & Variables */
         :root {
@@ -223,12 +231,18 @@
             color: var(--primary-blue);
         }
 
-        /* Terms Checkbox */
+        /* Remember me / Forgot password row */
+        .form-row-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
         .checkbox-group {
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            margin: 20px 0;
         }
 
         .checkbox-group input {
@@ -251,6 +265,17 @@
         }
 
         .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        .forgot-link:hover {
             text-decoration: underline;
         }
 
@@ -397,15 +422,17 @@
             border-color: var(--error) !important;
         }
     </style>
+  <script type="module" crossorigin src="/assets/login-DGw5ETg7.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/clerk-client-BsOroUMO.js">
 </head>
 <body>
 <header>
 <nav>
-<a class="logo" href="#">
+<a class="logo" href="index.html">
 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 32px; color: var(--primary-blue);">directions_car</span>
-<span class="logo-text">Destiny Des</span>
+<span class="logo-text">Destiny Dess</span>
 </a>
-<a class="back-link" href="#">
+<a class="back-link" href="index.html">
 <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
                 Back to Website
             </a>
@@ -416,25 +443,17 @@
 <div class="decor-blob blob-2"></div>
 <section class="auth-container">
 <div class="auth-header">
-<h1>Create Your Account</h1>
-<p>Create your Destiny Des account and start your driving journey.</p>
+<h1>Welcome Back</h1>
+<p>Log in to continue your driving journey with Destiny Dess.</p>
 </div>
 <div class="glass-card">
-<form id="signupForm">
-<!-- Full Name -->
-<div class="form-group">
-<label class="form-label" for="fullName">Full Name</label>
-<div class="input-wrapper">
-<span class="material-symbols-outlined input-icon">person</span>
-<input class="input-field" id="fullName" name="fullName" placeholder="Enter your full name" required="" type="text"/>
-</div>
-</div>
+<form id="loginForm" novalidate>
 <!-- Email Address -->
 <div class="form-group">
 <label class="form-label" for="email">Email Address</label>
 <div class="input-wrapper">
 <span class="material-symbols-outlined input-icon">mail</span>
-<input class="input-field" id="email" name="email" placeholder="name@example.com" required="" type="email"/>
+<input autocomplete="email" class="input-field" id="email" name="email" placeholder="name@example.com" required="" type="email"/>
 </div>
 </div>
 <!-- Password -->
@@ -442,39 +461,41 @@
 <label class="form-label" for="password">Password</label>
 <div class="input-wrapper">
 <span class="material-symbols-outlined input-icon">lock</span>
-<input class="input-field" id="password" minlength="8" name="password" placeholder="Create a password" required="" type="password"/>
+<input autocomplete="current-password" class="input-field" id="password" maxlength="100" name="password" placeholder="Enter your password" required="" type="password"/>
 <button class="toggle-btn" onclick="togglePassword('password', this)" type="button">
 <span class="material-symbols-outlined">visibility</span>
 </button>
 </div>
 </div>
-<!-- Confirm Password -->
-<div class="form-group">
-<label class="form-label" for="confirmPassword">Confirm Password</label>
-<div class="input-wrapper">
-<span class="material-symbols-outlined input-icon">lock_reset</span>
-<input class="input-field" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required="" type="password"/>
-<button class="toggle-btn" onclick="togglePassword('confirmPassword', this)" type="button">
-<span class="material-symbols-outlined">visibility</span>
-</button>
-</div>
-<p class="error-message" id="passwordMismatch">Passwords do not match.</p>
-</div>
-<!-- Terms -->
+<!-- Remember Me / Forgot Password -->
+<div class="form-row-between">
 <div class="checkbox-group">
-<input id="terms" name="terms" required="" type="checkbox"/>
-<label class="checkbox-label" for="terms">
-                            I agree to the <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.
-                        </label>
+<input id="rememberMe" name="rememberMe" type="checkbox"/>
+<label class="checkbox-label" for="rememberMe">Remember me</label>
+</div>
+<a class="forgot-link" href="forgot-password.html">Forgot password?</a>
 </div>
 <!-- Submit Button -->
-<button class="btn-primary" type="submit">
-<span>Create Account</span>
+<div id="loginError" class="error-message"></div>
+<div
+id="loginSuccess"
+style="
+display:none;
+color:#2e7d32;
+font-size:14px;
+margin-bottom:12px;
+text-align:center;">
+</div>
+<button
+id="loginButton"
+class="btn-primary"
+type="submit">
+<span>Login</span>
 <span class="material-symbols-outlined arrow">arrow_forward</span>
 </button>
 </form>
 <div class="auth-footer-links">
-<p>Already have an account? <a class="login-link" href="#">Login</a></p>
+<p>Don't have an account? <a class="login-link" href="register.html">Sign Up</a></p>
 </div>
 </div>
 <div class="trust-section">
@@ -492,79 +513,14 @@
 <footer>
 <div class="footer-content">
 <div class="footer-brand">
-<h2>Destiny Des</h2>
-<p>© 2024 Destiny Des Driving School. We Drive You To Your Destiny.</p>
+<h2>Destiny Dess</h2>
+<p>© 2024 Destiny Dess Driving School. We Drive You To Your Destiny.</p>
 </div>
 <div class="footer-links">
-<a href="#">Privacy Policy</a>
-<a href="#">Terms of Service</a>
-<a href="#">Contact</a>
+<a href="privacy.html">Privacy Policy</a>
+<a href="terms.html">Terms of Service</a>
+<a href="contact.html">Contact</a>
 </div>
 </div>
 </footer>
-<script>
-        function togglePassword(inputId, btn) {
-            const input = document.getElementById(inputId);
-            const icon = btn.querySelector('.material-symbols-outlined');
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.innerText = 'visibility_off';
-            } else {
-                input.type = 'password';
-                icon.innerText = 'visibility';
-            }
-        }
-
-        const signupForm = document.getElementById('signupForm');
-        const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirmPassword');
-        const passwordMismatch = document.getElementById('passwordMismatch');
-
-        signupForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Password Match Validation
-            if (password.value !== confirmPassword.value) {
-                passwordMismatch.style.display = 'block';
-                confirmPassword.classList.add('border-error');
-                return;
-            } else {
-                passwordMismatch.style.display = 'none';
-                confirmPassword.classList.remove('border-error');
-            }
-
-            // Success Animation
-            const btn = signupForm.querySelector('button[type="submit"]');
-            const originalContent = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s linear infinite">progress_activity</span> Creating...`;
-            
-            // Inline keyframe animation for the spinner
-            if (!document.getElementById('anim-style')) {
-                const style = document.createElement('style');
-                style.id = 'anim-style';
-                style.innerHTML = `@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`;
-                document.head.appendChild(style);
-            }
-
-            setTimeout(() => {
-                btn.style.backgroundColor = '#2e7d32'; // Success Green
-                btn.innerHTML = `<span class="material-symbols-outlined">check_circle</span> Account Created!`;
-                
-                setTimeout(() => {
-                    alert('Registration successful! Redirecting to dashboard...');
-                }, 1000);
-            }, 1500);
-        });
-
-        // Real-time mismatch detection
-        confirmPassword.addEventListener('input', function() {
-            if (confirmPassword.value && password.value !== confirmPassword.value) {
-                passwordMismatch.style.display = 'block';
-            } else {
-                passwordMismatch.style.display = 'none';
-                confirmPassword.classList.remove('border-error');
-            }
-        });
-    </script>
 </body></html>
