@@ -37,6 +37,18 @@ const registrationPackage = document.getElementById('registrationPackage');
 const registrationDate = document.getElementById('registrationDate');
 const registrationNotes = document.getElementById('registrationNotes');
 
+const registrationForm = document.getElementById('registrationForm');
+const registrationInfo = document.getElementById('registrationInfo');
+const packageOptions = document.getElementById('packageOptions');
+const regPhoneInput = document.getElementById('regPhoneInput');
+const regDobInput = document.getElementById('regDobInput');
+const regAddressInput = document.getElementById('regAddressInput');
+const registrationFormError = document.getElementById('registrationFormError');
+const registrationFormSuccess = document.getElementById('registrationFormSuccess');
+const submitRegistrationBtn = document.getElementById('submitRegistrationBtn');
+
+let selectedPackageId = null;
+
 const upcomingLessonsTableBody = document.getElementById('upcomingLessonsTableBody');
 const completedLessonsTableBody = document.getElementById('completedLessonsTableBody');
 const announcementsList = document.getElementById('announcementsList');
@@ -47,6 +59,8 @@ const updatePasswordBtn = document.getElementById('updatePasswordBtn');
 const currentPasswordInput = document.getElementById('currentPasswordInput');
 const newPasswordInput = document.getElementById('newPasswordInput');
 const logoutBtn = document.getElementById('logoutBtn');
+const portalMenuToggle = document.getElementById('portalMenuToggle');
+const portalNavLinks = document.getElementById('portalNavLinks');
 
 let currentClerkUser = null;
 let currentInstructorEmail = null;
@@ -180,11 +194,12 @@ async function loadRegistration(clerkUserId) {
     if (!registration) {
         setText(registrationStatusText, 'No registration on file');
         registrationStatusBadge.classList.remove('success');
-        setText(registrationStatus, 'Not registered');
-        setText(registrationPackage, null);
-        setText(registrationDate, null);
-        setText(registrationNotes, null);
         setText(dashboardPackage, null);
+
+        registrationInfo.style.display = 'none';
+        registrationForm.style.display = 'block';
+        await loadPackageOptions();
+
         return null;
     }
 
@@ -198,7 +213,118 @@ async function loadRegistration(clerkUserId) {
     setText(registrationNotes, registration.notes);
     setText(dashboardPackage, registration.packages?.name);
 
+    registrationForm.style.display = 'none';
+    registrationInfo.style.display = 'grid';
+
     return registration;
+}
+
+function showRegistrationFormError(message) {
+    registrationFormError.textContent = message;
+    registrationFormError.style.display = 'block';
+}
+
+function clearRegistrationFormError() {
+    registrationFormError.textContent = '';
+    registrationFormError.style.display = 'none';
+}
+
+function showRegistrationFormSuccess(message) {
+    registrationFormSuccess.textContent = message;
+    registrationFormSuccess.style.display = 'block';
+}
+
+async function loadPackageOptions() {
+    const supabase = getSupabase();
+
+    const { data: packages, error } = await supabase
+        .from('packages')
+        .select('*')
+        .order('sort_order', { ascending: true });
+
+    if (error) {
+        logLoadError('packages', error);
+        packageOptions.innerHTML = '<p style="color: var(--color-text-muted); font-size: 14px;">Could not load packages right now. Please try again later.</p>';
+        return;
+    }
+
+    if (!packages?.length) {
+        packageOptions.innerHTML = '<p style="color: var(--color-text-muted); font-size: 14px;">No packages are available yet.</p>';
+        return;
+    }
+
+    packageOptions.innerHTML = packages
+        .map((pkg) => {
+            const priceLabel = pkg.price != null ? `P${pkg.price}` : 'Custom pricing';
+            return `
+                <div class="package-option" data-package-id="${pkg.id}">
+                    <h4>${pkg.name}</h4>
+                    <div class="package-price">${priceLabel}</div>
+                    <p>${pkg.description || ''}</p>
+                </div>
+            `;
+        })
+        .join('');
+
+    packageOptions.querySelectorAll('.package-option').forEach((card) => {
+        card.addEventListener('click', () => {
+            packageOptions.querySelectorAll('.package-option').forEach((c) => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedPackageId = card.dataset.packageId;
+            clearRegistrationFormError();
+        });
+    });
+}
+
+async function submitRegistration(clerkUserId) {
+    clearRegistrationFormError();
+
+    if (!selectedPackageId) {
+        showRegistrationFormError('Please choose a package.');
+        return;
+    }
+
+    const phone = regPhoneInput.value.trim();
+    const dob = regDobInput.value;
+    const address = regAddressInput.value.trim();
+
+    if (!phone || !dob || !address) {
+        showRegistrationFormError('Please fill in your phone number, date of birth, and address.');
+        return;
+    }
+
+    submitRegistrationBtn.disabled = true;
+    submitRegistrationBtn.style.opacity = '0.6';
+
+    try {
+        const supabase = getSupabase();
+
+        const { error: profileError } = await supabase
+            .from('student_profiles')
+            .update({ phone, date_of_birth: dob, address })
+            .eq('clerk_user_id', clerkUserId);
+
+        if (profileError) throw profileError;
+
+        const { error: registrationError } = await supabase
+            .from('registrations')
+            .insert({
+                clerk_user_id: clerkUserId,
+                package_id: selectedPackageId,
+                status: 'pending',
+            });
+
+        if (registrationError) throw registrationError;
+
+        showRegistrationFormSuccess("Registration submitted! We'll confirm once your payment is verified.");
+        await loadRegistration(clerkUserId);
+    } catch (err) {
+        logLoadError('registration submission', err);
+        showRegistrationFormError('Something went wrong submitting your registration. Please try again.');
+    } finally {
+        submitRegistrationBtn.disabled = false;
+        submitRegistrationBtn.style.opacity = '';
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -399,6 +525,12 @@ async function loadAnnouncements() {
 // ---------------------------------------------------------------------------
 // Actions
 // ---------------------------------------------------------------------------
+submitRegistrationBtn?.addEventListener('click', () => {
+    if (currentClerkUser) {
+        submitRegistration(currentClerkUser.id);
+    }
+});
+
 editProfileBtn?.addEventListener('click', () => {
     // TODO: Open an edit-profile flow (modal or dedicated page) that writes
     // full_name/email back to Clerk and date_of_birth/address/phone to the
@@ -443,11 +575,36 @@ logoutBtn?.addEventListener('click', async () => {
 });
 
 // ---------------------------------------------------------------------------
+// Mobile nav toggle — the sidebar's nav links collapse into a dropdown
+// below the top bar on small screens; this button opens/closes it.
+// ---------------------------------------------------------------------------
+function setupMobileNav() {
+    if (!portalMenuToggle || !portalNavLinks) return;
+
+    function closeNav() {
+        portalNavLinks.classList.remove('is-open');
+        portalMenuToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    portalMenuToggle.addEventListener('click', () => {
+        const isOpen = portalNavLinks.classList.toggle('is-open');
+        portalMenuToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    // Close the dropdown once a section link is tapped.
+    portalNavLinks.querySelectorAll('.nav-link').forEach((link) => {
+        link.addEventListener('click', closeNav);
+    });
+}
+
+// ---------------------------------------------------------------------------
 // Init
 // ---------------------------------------------------------------------------
 async function init() {
     const clerk = await requireSession();
     if (!clerk) return; // Redirecting to login.html
+
+    setupMobileNav();
 
     currentClerkUser = clerk.user;
     const clerkUserId = clerk.user.id;

@@ -368,6 +368,70 @@
             color: var(--color-on-primary-container);
         }
 
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-gutter);
+        }
+
+        @media (max-width: 768px) {
+            .package-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .package-price-tag {
+            font-family: var(--font-lexend);
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 4px;
+        }
+
+        .pricing-card.highlight .package-price-tag {
+            color: var(--color-on-primary-container);
+        }
+
+        .package-features {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: auto;
+            list-style: none;
+        }
+
+        .package-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-family: var(--font-inter);
+            font-size: 14px;
+            color: var(--color-on-surface);
+        }
+
+        .pricing-card.highlight .package-features li {
+            color: var(--color-on-primary-container);
+        }
+
+        .package-features .material-symbols-outlined {
+            font-size: 18px;
+            color: var(--color-secondary);
+            flex-shrink: 0;
+        }
+
+        .pricing-card.highlight .package-features .material-symbols-outlined {
+            color: var(--color-secondary-fixed-dim);
+        }
+
+        .package-photo {
+            width: 100%;
+            max-width: 420px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-level-2);
+            display: block;
+            margin: 0 auto var(--spacing-xl);
+        }
+
         /* Disclaimer */
         .disclaimer-banner {
             margin-top: var(--spacing-xl);
@@ -867,6 +931,76 @@
 <div class="disclaimer-content">
 <span class="material-symbols-outlined disclaimer-icon">info</span>
 <p class="disclaimer-text">Contact us for the latest pricing and package availability.</p>
+</div>
+</section>
+<!-- One-Off Course Packages -->
+<section style="margin-top: var(--spacing-xxl);">
+<div style="text-align: center; max-width: 640px; margin: 0 auto var(--spacing-xl);">
+<h2 style="font-family: var(--font-lexend); font-size: 28px; color: var(--color-primary); margin-bottom: 8px;">One-Off Course Packages</h2>
+<p style="color: var(--color-on-surface-variant); font-size: 16px;">Complete driving courses, paid once — no recurring fees. Contact us on WhatsApp to enroll.</p>
+</div>
+<img alt="Destiny Dess Driving School course packages flyer" class="package-photo" src="/assests/images/deep.jpeg"/>
+<div class="package-grid">
+<article class="pricing-card">
+<div class="card-bg-icon">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: inherit;">directions_car</span>
+</div>
+<div class="card-header">
+<div class="card-icon-wrapper icon-blue-light">
+<span class="material-symbols-outlined">directions_car</span>
+</div>
+<h2 class="card-title">Starter Package</h2>
+<div class="package-price-tag">P2,500</div>
+</div>
+<ul class="package-features">
+<li><span class="material-symbols-outlined">check_circle</span>3 month course</li>
+<li><span class="material-symbols-outlined">check_circle</span>Includes booking fee</li>
+<li><span class="material-symbols-outlined">check_circle</span>Includes vehicle fee</li>
+<li><span class="material-symbols-outlined">check_circle</span>Student progress card</li>
+</ul>
+</article>
+<article class="pricing-card highlight">
+<div class="card-bg-icon">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: inherit;">menu_book</span>
+</div>
+<div class="card-header">
+<div class="card-icon-wrapper icon-blue-dark">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<h2 class="card-title">Advanced Package</h2>
+<div class="package-price-tag">P3,000</div>
+</div>
+<ul class="package-features">
+<li><span class="material-symbols-outlined">check_circle</span>Theory lessons</li>
+<li><span class="material-symbols-outlined">check_circle</span>3 month course</li>
+<li><span class="material-symbols-outlined">check_circle</span>Includes booking and vehicle fee</li>
+<li><span class="material-symbols-outlined">check_circle</span>Student progress card</li>
+</ul>
+</article>
+<article class="pricing-card">
+<div class="card-bg-icon">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: inherit;">tune</span>
+</div>
+<div class="card-header">
+<div class="card-icon-wrapper icon-grey">
+<span class="material-symbols-outlined">tune</span>
+</div>
+<h2 class="card-title">Custom Package</h2>
+<div class="package-price-tag">Custom</div>
+</div>
+<ul class="package-features">
+<li><span class="material-symbols-outlined">check_circle</span>Tailored to learner's needs</li>
+<li><span class="material-symbols-outlined">check_circle</span>Learner chooses payment method</li>
+<li><span class="material-symbols-outlined">check_circle</span>Flexible training plan</li>
+<li><span class="material-symbols-outlined">check_circle</span>Student progress card</li>
+</ul>
+</article>
+</div>
+<div style="text-align: center; margin-top: var(--spacing-xl);">
+<a class="btn btn-primary" href="https://wa.me/26774817112" rel="noopener" style="display: inline-flex; align-items: center; gap: 8px;" target="_blank">
+<span class="material-symbols-outlined" style="font-size: 18px;">chat</span>
+                Enroll Now — Get 15% Student Discount
+            </a>
 </div>
 </section>
 </main>

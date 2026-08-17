@@ -3,7 +3,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Student Portal - Destiny Dess Driving School</title>
+<title>Student Profile - Destiny Dess Driving School</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Lexend:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
 <!-- Clerk -->
@@ -345,6 +345,114 @@ type="text/javascript"
         display: none;
     }
 
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+        color: var(--color-text-muted);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .back-link:hover {
+        color: var(--color-primary);
+    }
+
+    .module-status-btn {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        background-color: var(--color-surface);
+        color: var(--color-text-muted);
+        text-transform: capitalize;
+    }
+
+    .module-status-btn.locked { color: var(--color-text-muted); }
+    .module-status-btn.in-progress { border-color: var(--color-secondary); color: var(--color-secondary); }
+    .module-status-btn.completed { border-color: var(--color-success); color: var(--color-success); background-color: #eaf6ea; }
+
+    .lesson-actions-cell {
+        display: flex;
+        gap: 6px;
+    }
+
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .stat-card {
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius);
+        padding: var(--spacing-md);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-card label {
+        display: block;
+        font-size: 12px;
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 6px;
+    }
+
+    .stat-card .stat-value {
+        font-family: var(--font-heading);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--color-primary);
+    }
+
+    .stat-card.pending .stat-value {
+        color: var(--color-error);
+    }
+
+    .search-row {
+        display: flex;
+        gap: var(--spacing-sm);
+        margin-bottom: var(--spacing-md);
+        flex-wrap: wrap;
+    }
+
+    .search-input {
+        flex: 1;
+        min-width: 200px;
+        padding: 8px 12px;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    .list-table th {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .list-table th:hover {
+        color: var(--color-primary);
+    }
+
+    .list-table tbody tr {
+        cursor: pointer;
+    }
+
+    .list-table tbody tr:hover {
+        background-color: var(--color-background);
+    }
+
+    .badge.pending {
+        background-color: #fdecea;
+        color: var(--color-error);
+    }
+
     .announcement-item {
         margin-bottom: var(--spacing-md);
         padding: var(--spacing-md);
@@ -528,14 +636,11 @@ type="text/javascript"
         }
     }
 </style>
-  <script type="module" crossorigin src="/assets/studentPortal-5fc4IGqM.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/clerk-client-BsOroUMO.js">
-  <link rel="modulepreload" crossorigin href="/assets/supabase-client-CEuhVfWo.js">
 </head>
 <body style="display:none;">
 <aside class="sidebar">
 <div class="sidebar-header">
-<h1>Student Portal</h1>
+<h1>Admin Dashboard</h1>
 </div>
 <button class="portal-menu-toggle" id="portalMenuToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="portalNavLinks">
 <span class="material-symbols-outlined">menu</span>
@@ -545,235 +650,171 @@ type="text/javascript"
 <span id="userInitials"></span>
 </div>
 <div class="user-info">
-<p>Welcome back,</p>
+<p>Signed in as</p>
 <p class="user-name" id="userName">Loading&hellip;</p>
 </div>
 </div>
 <nav class="nav-links" id="portalNavLinks">
-<a class="nav-link active" href="#dashboard">
+<a class="nav-link" href="admin-dashboard.html#overview">
 <span class="material-symbols-outlined">dashboard</span>
-            Dashboard
+            Overview
         </a>
-<a class="nav-link" href="#profile">
-<span class="material-symbols-outlined">person</span>
-            Profile
+<a class="nav-link active" href="admin-dashboard.html#students">
+<span class="material-symbols-outlined">group</span>
+            Students
         </a>
-<a class="nav-link" href="#registration">
-<span class="material-symbols-outlined">app_registration</span>
-            My Registration
-        </a>
-<a class="nav-link" href="#bookings">
-<span class="material-symbols-outlined">event_note</span>
-            My Lessons
-        </a>
-<a class="nav-link" href="#announcements">
+<a class="nav-link" href="admin-dashboard.html#announcements">
 <span class="material-symbols-outlined">campaign</span>
             Announcements
         </a>
-<a class="nav-link" href="#settings">
-<span class="material-symbols-outlined">settings</span>
-            Settings
-        </a>
 </nav>
 <div style="margin-top: auto;">
-<button class="btn" id="bookLessonBtn" style="width: 100%;">
-<span class="material-symbols-outlined">calendar_add_on</span>
-            Book Lesson
+<button class="btn" id="logoutBtn" style="width: 100%; background-color: var(--color-surface); color: var(--color-error); border: 1px solid var(--color-error);">
+<span class="material-symbols-outlined">logout</span>
+            Logout
         </button>
 </div>
 </aside>
 <main class="main-content">
-<section class="section" id="dashboard">
+<a class="back-link" href="admin-dashboard.html#students">
+<span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+        Back to Students
+    </a>
+
+<section class="section" id="student-header">
 <div class="section-header">
-<h2 id="dashboardGreeting">Welcome back.</h2>
-<span class="badge" id="registrationStatusBadge">
-<span class="material-symbols-outlined" style="font-size: 16px;">hourglass_empty</span>
-<span id="registrationStatusText">Loading&hellip;</span>
-            </span>
+<h2 id="studentHeaderName">Loading&hellip;</h2>
+<span class="badge" id="studentStatusBadge">
+<span id="studentStatusText">&mdash;</span>
+</span>
 </div>
-<div class="info-grid" style="margin-bottom: var(--spacing-xl);">
-<div class="info-item">
-<label>Selected Package</label>
-<div id="dashboardPackage">&mdash;</div>
-</div>
-<div class="info-item">
-<label>Next Lesson</label>
-<div id="dashboardNextLesson">&mdash;</div>
-</div>
-<div class="info-item">
-<label>Instructor</label>
-<div class="info-item-row">
-<div id="dashboardInstructor">&mdash;</div>
-<button class="btn btn-small" id="contactInstructorBtn" type="button">
-<span class="material-symbols-outlined" style="font-size: 16px;">mail</span>
-                        Contact
-                    </button>
-</div>
-</div>
-<div class="info-item">
-<label>Type</label>
-<div id="dashboardLessonType">&mdash;</div>
-</div>
-</div>
-<div class="progress-wrap">
-<div class="progress-label-row">
-<span>Course Progress</span>
-<span id="progressLabel">&mdash;</span>
-</div>
-<div class="progress-track">
-<div class="progress-fill" id="progressFill"></div>
-</div>
-</div>
-<h3 style="font-size: 16px; margin-bottom: var(--spacing-md);">Course Modules</h3>
-<div class="module-list" id="moduleList" style="margin-bottom: var(--spacing-xl);">
-<p style="color: var(--color-text-muted); font-size: 14px;">Loading course modules&hellip;</p>
-</div>
-<h3 style="font-size: 16px; margin-bottom: var(--spacing-md);">Notifications</h3>
-<div id="notificationsList">
-<p style="color: var(--color-text-muted); font-size: 14px;">Loading notifications&hellip;</p>
-</div>
-</section>
-<section class="section" id="profile">
-<div class="section-header">
-<h2>Profile</h2>
-<button class="btn" id="editProfileBtn">Edit</button>
-</div>
-<div class="info-grid">
-<div class="info-item">
-<label>Full Name</label>
-<div id="profileFullName">&mdash;</div>
-</div>
+<div class="info-grid" id="studentInfoDisplay">
 <div class="info-item">
 <label>Email</label>
-<div id="profileEmail">&mdash;</div>
+<div id="studentEmail">&mdash;</div>
 </div>
 <div class="info-item">
 <label>Phone</label>
-<div id="profilePhone">&mdash;</div>
+<div id="studentPhone">&mdash;</div>
 </div>
 <div class="info-item">
 <label>Date of Birth</label>
-<div id="profileDob">&mdash;</div>
+<div id="studentDob">&mdash;</div>
 </div>
 <div class="info-item">
 <label>Address</label>
-<div id="profileAddress">&mdash;</div>
+<div id="studentAddress">&mdash;</div>
 </div>
 </div>
 </section>
-<section class="section" id="registration">
+
+<section class="section" id="assign-package">
 <div class="section-header">
-<h2>My Registration</h2>
+<h2>Package</h2>
 </div>
-
-<!-- Shown when the student has no registration yet -->
-<div id="registrationForm" style="display:none;">
-<p style="color: var(--color-text-muted); font-size: 14px; margin-bottom: var(--spacing-lg);">You haven't registered for a package yet. Choose one below and fill in your details — we'll confirm once your payment is verified.</p>
-<div class="package-options" id="packageOptions">
-<p style="color: var(--color-text-muted); font-size: 14px;">Loading packages&hellip;</p>
-</div>
-<div class="form-group">
-<label>Phone Number</label>
-<input class="form-control" id="regPhoneInput" type="tel"/>
-</div>
-<div class="form-group">
-<label>Date of Birth</label>
-<input class="form-control" id="regDobInput" type="date"/>
-</div>
-<div class="form-group">
-<label>Address</label>
-<input class="form-control" id="regAddressInput" type="text"/>
-</div>
-<div class="form-error-message" id="registrationFormError"></div>
-<div class="form-success-message" id="registrationFormSuccess"></div>
-<button class="btn" id="submitRegistrationBtn" type="button">Submit Registration</button>
-</div>
-
-<!-- Shown once a registration exists -->
-<div class="info-grid" id="registrationInfo" style="display:none;">
+<div class="info-grid" style="margin-bottom: var(--spacing-lg);">
 <div class="info-item">
-<label>Status</label>
-<div id="registrationStatus">&mdash;</div>
-</div>
-<div class="info-item">
-<label>Package</label>
-<div id="registrationPackage">&mdash;</div>
+<label>Current Package</label>
+<div id="currentPackageDisplay">No Package Purchased</div>
 </div>
 <div class="info-item">
 <label>Registration Date</label>
-<div id="registrationDate">&mdash;</div>
+<div id="currentRegisteredDate">&mdash;</div>
 </div>
-<div class="info-item">
+</div>
+<div style="max-width: 500px;">
+<div class="form-group">
+<label>Package</label>
+<select class="form-control" id="assignPackageSelect">
+<option value="">Loading packages&hellip;</option>
+</select>
+</div>
+<div class="form-group">
+<label>Status</label>
+<select class="form-control" id="assignStatusSelect">
+<option value="pending">Pending</option>
+<option value="approved">Approved</option>
+<option value="active">Active</option>
+<option value="completed">Completed</option>
+<option value="cancelled">Cancelled</option>
+</select>
+</div>
+<div class="form-group">
 <label>Notes</label>
-<div id="registrationNotes">&mdash;</div>
+<input class="form-control" id="assignNotesInput" type="text"/>
 </div>
+<div class="form-error-message" id="assignPackageError"></div>
+<div class="form-success-message" id="assignPackageSuccess"></div>
+<button class="btn" id="assignPackageBtn">Assign Package</button>
 </div>
 </section>
-<section class="section" id="bookings">
+
+<section class="section" id="course-modules">
 <div class="section-header">
-<h2>Upcoming Lessons</h2>
+<h2>Course Modules</h2>
 </div>
-<table class="list-table">
+<div class="progress-wrap">
+<div class="progress-label-row">
+<span>Progress</span>
+<span id="adminProgressLabel">&mdash;</span>
+</div>
+<div class="progress-track">
+<div class="progress-fill" id="adminProgressFill"></div>
+</div>
+</div>
+<div class="module-list" id="adminModuleList">
+<p style="color: var(--color-text-muted); font-size: 14px;">Assign a package to see its modules.</p>
+</div>
+</section>
+
+<section class="section" id="lessons">
+<div class="section-header">
+<h2>Practical Lessons</h2>
+</div>
+<table class="list-table" style="margin-bottom: var(--spacing-xl);">
 <thead>
 <tr>
 <th>Date</th>
 <th>Time</th>
 <th>Type</th>
+<th>Instructor</th>
 <th>Status</th>
+<th></th>
 </tr>
 </thead>
-<tbody id="upcomingLessonsTableBody">
+<tbody id="adminLessonsTableBody">
 <tr>
-<td colspan="4">Loading your upcoming lessons&hellip;</td>
+<td colspan="6">Loading lessons&hellip;</td>
 </tr>
 </tbody>
 </table>
-</section>
-<section class="section" id="completed-lessons">
-<div class="section-header">
-<h2>Completed Lessons</h2>
-</div>
-<table class="list-table">
-<thead>
-<tr>
-<th>Date</th>
-<th>Time</th>
-<th>Type</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody id="completedLessonsTableBody">
-<tr>
-<td colspan="4">Loading your completed lessons&hellip;</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="section" id="announcements">
-<div class="section-header">
-<h2>Announcements</h2>
-</div>
-<div id="announcementsList">
-<p style="color: var(--color-text-muted); font-size: 14px;">Loading announcements&hellip;</p>
-</div>
-</section>
-<section class="section" id="settings">
-<div class="section-header">
-<h2>Settings</h2>
-</div>
-<div style="max-width: 400px; margin-bottom: var(--spacing-lg);">
+<h3 style="font-size: 16px; margin-bottom: var(--spacing-md);">Schedule a Lesson</h3>
+<div style="max-width: 500px;">
 <div class="form-group">
-<label>Current Password</label>
-<input class="form-control" id="currentPasswordInput" type="password"/>
+<label>Date</label>
+<input class="form-control" id="scheduleLessonDate" type="date"/>
 </div>
 <div class="form-group">
-<label>New Password</label>
-<input class="form-control" id="newPasswordInput" type="password"/>
+<label>Time</label>
+<input class="form-control" id="scheduleLessonTime" placeholder="e.g. 10:00 AM" type="text"/>
 </div>
-<button class="btn" id="updatePasswordBtn">Update Password</button>
+<div class="form-group">
+<label>Type</label>
+<input class="form-control" id="scheduleLessonType" placeholder="e.g. City Driving" type="text"/>
 </div>
-<hr style="border: 0; border-top: 1px solid var(--color-border); margin: var(--spacing-lg) 0;"/>
-<button class="btn" id="logoutBtn" style="background-color: var(--color-surface); color: var(--color-error); border: 1px solid var(--color-error);">Logout</button>
+<div class="form-group">
+<label>Instructor Name</label>
+<input class="form-control" id="scheduleInstructorName" type="text"/>
+</div>
+<div class="form-group">
+<label>Instructor Email</label>
+<input class="form-control" id="scheduleInstructorEmail" type="email"/>
+</div>
+<div class="form-error-message" id="scheduleLessonError"></div>
+<div class="form-success-message" id="scheduleLessonSuccess"></div>
+<button class="btn" id="scheduleLessonBtn">Schedule Lesson</button>
+</div>
 </section>
 </main>
+<script src="/js/admin-student.js" type="module"></script>
 </body></html>

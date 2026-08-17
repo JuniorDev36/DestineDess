@@ -16,6 +16,8 @@ export default defineConfig({
         studentPortal: resolve(__dirname, "student-portal.html"),
         privacy: resolve(__dirname, "privacy.html"),
         terms: resolve(__dirname, "terms.html"),
+        admindashboard: resolve(__dirname, "admin-dashboard.html"),
+        adminstudent: resolve(__dirname, "admin-student.html"),
       },
     },
   },
