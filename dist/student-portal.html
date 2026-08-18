@@ -528,7 +528,7 @@ type="text/javascript"
         }
     }
 </style>
-  <script type="module" crossorigin src="/assets/studentPortal-5fc4IGqM.js"></script>
+  <script type="module" crossorigin src="/assets/studentPortal-BDJgkJbZ.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/clerk-client-BsOroUMO.js">
   <link rel="modulepreload" crossorigin href="/assets/supabase-client-CEuhVfWo.js">
 </head>
@@ -576,10 +576,10 @@ type="text/javascript"
         </a>
 </nav>
 <div style="margin-top: auto;">
-<button class="btn" id="bookLessonBtn" style="width: 100%;">
+<a class="btn" href="#requestLessonForm" style="width: 100%; text-decoration: none; box-sizing: border-box;">
 <span class="material-symbols-outlined">calendar_add_on</span>
             Book Lesson
-        </button>
+        </a>
 </div>
 </aside>
 <main class="main-content">
@@ -617,11 +617,29 @@ type="text/javascript"
 </div>
 <div class="progress-wrap">
 <div class="progress-label-row">
-<span>Course Progress</span>
+<span>Overall Progress</span>
 <span id="progressLabel">&mdash;</span>
 </div>
 <div class="progress-track">
 <div class="progress-fill" id="progressFill"></div>
+</div>
+</div>
+<div class="progress-wrap">
+<div class="progress-label-row">
+<span>Theory</span>
+<span id="theoryProgressLabel">&mdash;</span>
+</div>
+<div class="progress-track">
+<div class="progress-fill" id="theoryProgressFill"></div>
+</div>
+</div>
+<div class="progress-wrap">
+<div class="progress-label-row">
+<span>Practical</span>
+<span id="practicalProgressLabel">&mdash;</span>
+</div>
+<div class="progress-track">
+<div class="progress-fill" id="practicalProgressFill"></div>
 </div>
 </div>
 <h3 style="font-size: 16px; margin-bottom: var(--spacing-md);">Course Modules</h3>
@@ -638,7 +656,7 @@ type="text/javascript"
 <h2>Profile</h2>
 <button class="btn" id="editProfileBtn">Edit</button>
 </div>
-<div class="info-grid">
+<div class="info-grid" id="profileInfoDisplay">
 <div class="info-item">
 <label>Full Name</label>
 <div id="profileFullName">&mdash;</div>
@@ -658,6 +676,30 @@ type="text/javascript"
 <div class="info-item">
 <label>Address</label>
 <div id="profileAddress">&mdash;</div>
+</div>
+</div>
+<div id="profileEditForm" style="display:none; max-width: 500px;">
+<div class="form-group">
+<label>Full Name</label>
+<input class="form-control" id="editFullNameInput" type="text"/>
+</div>
+<div class="form-group">
+<label>Phone</label>
+<input class="form-control" id="editPhoneInput" type="tel"/>
+</div>
+<div class="form-group">
+<label>Date of Birth</label>
+<input class="form-control" id="editDobInput" type="date"/>
+</div>
+<div class="form-group">
+<label>Address</label>
+<input class="form-control" id="editAddressInput" type="text"/>
+</div>
+<div class="form-error-message" id="editProfileError"></div>
+<div class="form-success-message" id="editProfileSuccess"></div>
+<div style="display: flex; gap: var(--spacing-sm);">
+<button class="btn" id="saveProfileBtn">Save Changes</button>
+<button class="btn" id="cancelEditProfileBtn" style="background-color: var(--color-surface); color: var(--color-text-muted); border: 1px solid var(--color-border);">Cancel</button>
 </div>
 </div>
 </section>
@@ -712,6 +754,25 @@ type="text/javascript"
 <section class="section" id="bookings">
 <div class="section-header">
 <h2>Upcoming Lessons</h2>
+</div>
+<div id="requestLessonForm" style="max-width: 500px; margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--color-border);">
+<h3 style="font-size: 15px; margin-bottom: var(--spacing-md);">Request a Lesson</h3>
+<p style="color: var(--color-text-muted); font-size: 13px; margin-bottom: var(--spacing-md);">Let us know your preferred date, time, and lesson type — we'll confirm it and assign an instructor.</p>
+<div class="form-group">
+<label>Preferred Date</label>
+<input class="form-control" id="reqLessonDate" type="date"/>
+</div>
+<div class="form-group">
+<label>Preferred Time</label>
+<input class="form-control" id="reqLessonTime" placeholder="e.g. 10:00 AM" type="text"/>
+</div>
+<div class="form-group">
+<label>Lesson Type</label>
+<input class="form-control" id="reqLessonType" placeholder="e.g. City Driving" type="text"/>
+</div>
+<div class="form-error-message" id="requestLessonError"></div>
+<div class="form-success-message" id="requestLessonSuccess"></div>
+<button class="btn" id="requestLessonBtn">Request Lesson</button>
 </div>
 <table class="list-table">
 <thead>
