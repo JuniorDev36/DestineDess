@@ -22,6 +22,10 @@ const dashboardLessonType = document.getElementById('dashboardLessonType');
 
 const progressLabel = document.getElementById('progressLabel');
 const progressFill = document.getElementById('progressFill');
+const theoryProgressLabel = document.getElementById('theoryProgressLabel');
+const theoryProgressFill = document.getElementById('theoryProgressFill');
+const practicalProgressLabel = document.getElementById('practicalProgressLabel');
+const practicalProgressFill = document.getElementById('practicalProgressFill');
 const moduleList = document.getElementById('moduleList');
 const notificationsList = document.getElementById('notificationsList');
 const contactInstructorBtn = document.getElementById('contactInstructorBtn');
@@ -31,6 +35,16 @@ const profileEmail = document.getElementById('profileEmail');
 const profilePhone = document.getElementById('profilePhone');
 const profileDob = document.getElementById('profileDob');
 const profileAddress = document.getElementById('profileAddress');
+const profileInfoDisplay = document.getElementById('profileInfoDisplay');
+const profileEditForm = document.getElementById('profileEditForm');
+const editFullNameInput = document.getElementById('editFullNameInput');
+const editPhoneInput = document.getElementById('editPhoneInput');
+const editDobInput = document.getElementById('editDobInput');
+const editAddressInput = document.getElementById('editAddressInput');
+const editProfileError = document.getElementById('editProfileError');
+const editProfileSuccess = document.getElementById('editProfileSuccess');
+const saveProfileBtn = document.getElementById('saveProfileBtn');
+const cancelEditProfileBtn = document.getElementById('cancelEditProfileBtn');
 
 const registrationStatus = document.getElementById('registrationStatus');
 const registrationPackage = document.getElementById('registrationPackage');
@@ -50,11 +64,16 @@ const submitRegistrationBtn = document.getElementById('submitRegistrationBtn');
 let selectedPackageId = null;
 
 const upcomingLessonsTableBody = document.getElementById('upcomingLessonsTableBody');
+const reqLessonDate = document.getElementById('reqLessonDate');
+const reqLessonTime = document.getElementById('reqLessonTime');
+const reqLessonType = document.getElementById('reqLessonType');
+const requestLessonError = document.getElementById('requestLessonError');
+const requestLessonSuccess = document.getElementById('requestLessonSuccess');
+const requestLessonBtn = document.getElementById('requestLessonBtn');
 const completedLessonsTableBody = document.getElementById('completedLessonsTableBody');
 const announcementsList = document.getElementById('announcementsList');
 
 const editProfileBtn = document.getElementById('editProfileBtn');
-const bookLessonBtn = document.getElementById('bookLessonBtn');
 const updatePasswordBtn = document.getElementById('updatePasswordBtn');
 const currentPasswordInput = document.getElementById('currentPasswordInput');
 const newPasswordInput = document.getElementById('newPasswordInput');
@@ -63,6 +82,7 @@ const portalMenuToggle = document.getElementById('portalMenuToggle');
 const portalNavLinks = document.getElementById('portalNavLinks');
 
 let currentClerkUser = null;
+let currentProfile = null;
 let currentInstructorEmail = null;
 
 // ---------------------------------------------------------------------------
@@ -102,6 +122,13 @@ async function requireSession() {
 
     if (!clerk.user) {
         window.location.href = 'login.html';
+        return null;
+    }
+
+    // Admins don't belong on the student portal — send them to their own
+    // dashboard instead, without ever showing them this page's content.
+    if (clerk.user.publicMetadata?.role === 'admin') {
+        window.location.href = 'admin-dashboard.html';
         return null;
     }
 
@@ -170,6 +197,90 @@ function renderUserProfile(clerkUser, profile) {
         userAvatar.innerHTML = `<img alt="Profile picture" src="${clerkUser.imageUrl}" />`;
     } else {
         userInitials.textContent = getInitials(fullName);
+    }
+}
+
+// Clerk's user.update() wants firstName/lastName rather than one field.
+function splitFullName(fullName) {
+    const parts = fullName.trim().split(/\s+/);
+    const firstName = parts.shift() || '';
+    const lastName = parts.join(' ');
+    return { firstName, lastName };
+}
+
+function showEditProfileError(message) {
+    editProfileError.textContent = message;
+    editProfileError.style.display = 'block';
+}
+
+function clearEditProfileMessages() {
+    editProfileError.textContent = '';
+    editProfileError.style.display = 'none';
+    editProfileSuccess.textContent = '';
+    editProfileSuccess.style.display = 'none';
+}
+
+function openProfileEditForm() {
+    clearEditProfileMessages();
+
+    const fullName = currentClerkUser?.fullName
+        || [currentClerkUser?.firstName, currentClerkUser?.lastName].filter(Boolean).join(' ');
+
+    editFullNameInput.value = fullName || '';
+    editPhoneInput.value = currentProfile?.phone || '';
+    editDobInput.value = currentProfile?.date_of_birth || '';
+    editAddressInput.value = currentProfile?.address || '';
+
+    profileInfoDisplay.style.display = 'none';
+    profileEditForm.style.display = 'block';
+}
+
+function closeProfileEditForm() {
+    profileEditForm.style.display = 'none';
+    profileInfoDisplay.style.display = 'grid';
+}
+
+async function saveProfileChanges() {
+    clearEditProfileMessages();
+
+    const fullName = editFullNameInput.value.trim();
+    const phone = editPhoneInput.value.trim();
+    const dob = editDobInput.value;
+    const address = editAddressInput.value.trim();
+
+    if (fullName.length < 2) {
+        showEditProfileError('Please enter your full name.');
+        return;
+    }
+
+    saveProfileBtn.disabled = true;
+    saveProfileBtn.style.opacity = '0.6';
+
+    try {
+        const clerk = await getClerk();
+        const { firstName, lastName } = splitFullName(fullName);
+
+        await clerk.user.update({ firstName, lastName });
+
+        const supabase = getSupabase();
+        const { data: updatedProfile, error } = await supabase
+            .from('student_profiles')
+            .update({ phone: phone || null, date_of_birth: dob || null, address: address || null })
+            .eq('clerk_user_id', currentClerkUser.id)
+            .select()
+            .maybeSingle();
+
+        if (error) throw error;
+
+        currentProfile = updatedProfile || currentProfile;
+        renderUserProfile(clerk.user, currentProfile);
+        closeProfileEditForm();
+    } catch (err) {
+        logLoadError('profile update', err);
+        showEditProfileError('Could not save your changes. Please try again.');
+    } finally {
+        saveProfileBtn.disabled = false;
+        saveProfileBtn.style.opacity = '';
     }
 }
 
@@ -382,6 +493,61 @@ async function loadLessons(clerkUserId) {
     }
 }
 
+function showRequestLessonError(message) {
+    requestLessonError.textContent = message;
+    requestLessonError.style.display = 'block';
+}
+
+function clearRequestLessonMessages() {
+    requestLessonError.textContent = '';
+    requestLessonError.style.display = 'none';
+    requestLessonSuccess.textContent = '';
+    requestLessonSuccess.style.display = 'none';
+}
+
+async function submitLessonRequest(clerkUserId) {
+    clearRequestLessonMessages();
+
+    const date = reqLessonDate.value;
+    const time = reqLessonTime.value.trim();
+    const type = reqLessonType.value.trim();
+
+    if (!date || !time || !type) {
+        showRequestLessonError('Please fill in a preferred date, time, and lesson type.');
+        return;
+    }
+
+    requestLessonBtn.disabled = true;
+    requestLessonBtn.style.opacity = '0.6';
+
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('lessons').insert({
+            clerk_user_id: clerkUserId,
+            lesson_date: date,
+            lesson_time: time,
+            lesson_type: type,
+            status: 'upcoming',
+        });
+
+        if (error) throw error;
+
+        requestLessonSuccess.textContent = "Lesson requested! We'll confirm it and assign an instructor soon.";
+        requestLessonSuccess.style.display = 'block';
+        reqLessonDate.value = '';
+        reqLessonTime.value = '';
+        reqLessonType.value = '';
+
+        await loadLessons(clerkUserId);
+    } catch (err) {
+        logLoadError('lesson request', err);
+        showRequestLessonError('Something went wrong requesting your lesson. Please try again.');
+    } finally {
+        requestLessonBtn.disabled = false;
+        requestLessonBtn.style.opacity = '';
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Course progress + modules
 // Theory-related modules only show for students whose package includes
@@ -391,20 +557,47 @@ async function loadProgress(clerkUserId, registration) {
     const supabase = getSupabase();
     const includesTheory = registration?.packages?.includes_theory ?? false;
 
-    const { data: modules, error: modulesError } = await supabase
-        .from('course_modules')
-        .select('id, name, sort_order, requires_theory')
-        .order('sort_order', { ascending: true });
+    // Prefer modules scoped to this exact package; fall back to the
+    // global theory-gated curriculum if the package has none of its own.
+    let relevantModules = [];
 
-    if (modulesError) {
-        logLoadError('course modules', modulesError);
+    if (registration?.package_id) {
+        const { data: packageModules, error: packageModulesError } = await supabase
+            .from('course_modules')
+            .select('id, name, sort_order, category')
+            .eq('package_id', registration.package_id)
+            .order('sort_order', { ascending: true });
+
+        if (packageModulesError) {
+            logLoadError('package modules', packageModulesError);
+        }
+
+        relevantModules = packageModules || [];
     }
 
-    const relevantModules = (modules || []).filter((m) => !m.requires_theory || includesTheory);
+    if (!relevantModules.length) {
+        const { data: globalModules, error: globalModulesError } = await supabase
+            .from('course_modules')
+            .select('id, name, sort_order, requires_theory, category')
+            .is('package_id', null)
+            .order('sort_order', { ascending: true });
+
+        if (globalModulesError) {
+            logLoadError('global modules', globalModulesError);
+        }
+
+        relevantModules = (globalModules || []).filter((m) => !m.requires_theory || includesTheory);
+    }
+
+    function resetBar(labelEl, fillEl) {
+        labelEl.textContent = 'No modules yet';
+        fillEl.style.width = '0%';
+    }
 
     if (!relevantModules.length) {
-        setText(progressLabel, 'No modules yet');
-        progressFill.style.width = '0%';
+        resetBar(progressLabel, progressFill);
+        resetBar(theoryProgressLabel, theoryProgressFill);
+        resetBar(practicalProgressLabel, practicalProgressFill);
         moduleList.innerHTML = '<p style="color: var(--color-text-muted); font-size: 14px;">Your course modules will appear here once your curriculum is set up.</p>';
         return;
     }
@@ -423,13 +616,24 @@ async function loadProgress(clerkUserId, registration) {
     const merged = relevantModules.map((module) => ({
         name: module.name,
         status: progressByModule.get(module.id) || 'locked',
+        category: module.category || 'practical',
     }));
 
-    const completedCount = merged.filter((m) => m.status === 'completed').length;
-    const percent = Math.round((completedCount / merged.length) * 100);
+    function renderBar(labelEl, fillEl, items, emptyLabel) {
+        if (!items.length) {
+            labelEl.textContent = emptyLabel;
+            fillEl.style.width = '0%';
+            return;
+        }
+        const completedCount = items.filter((m) => m.status === 'completed').length;
+        const percent = Math.round((completedCount / items.length) * 100);
+        labelEl.textContent = `${completedCount} of ${items.length} complete (${percent}%)`;
+        fillEl.style.width = `${percent}%`;
+    }
 
-    setText(progressLabel, `${completedCount} of ${merged.length} modules complete (${percent}%)`);
-    progressFill.style.width = `${percent}%`;
+    renderBar(progressLabel, progressFill, merged, 'No modules yet');
+    renderBar(theoryProgressLabel, theoryProgressFill, merged.filter((m) => m.category === 'theory'), 'No theory modules');
+    renderBar(practicalProgressLabel, practicalProgressFill, merged.filter((m) => m.category === 'practical'), 'No practical modules');
 
     const statusIcon = {
         completed: 'check_circle',
@@ -531,16 +735,15 @@ submitRegistrationBtn?.addEventListener('click', () => {
     }
 });
 
-editProfileBtn?.addEventListener('click', () => {
-    // TODO: Open an edit-profile flow (modal or dedicated page) that writes
-    // full_name/email back to Clerk and date_of_birth/address/phone to the
-    // student_profiles table in Supabase, then re-run renderUserProfile().
+requestLessonBtn?.addEventListener('click', () => {
+    if (currentClerkUser) {
+        submitLessonRequest(currentClerkUser.id);
+    }
 });
 
-bookLessonBtn?.addEventListener('click', () => {
-    // TODO: Open a booking flow (modal or dedicated page) that inserts a
-    // row into the lessons table, then re-run loadLessons().
-});
+editProfileBtn?.addEventListener('click', openProfileEditForm);
+saveProfileBtn?.addEventListener('click', saveProfileChanges);
+cancelEditProfileBtn?.addEventListener('click', closeProfileEditForm);
 
 contactInstructorBtn?.addEventListener('click', () => {
     if (currentInstructorEmail) {
@@ -610,6 +813,7 @@ async function init() {
     const clerkUserId = clerk.user.id;
 
     const profile = await ensureProfile(clerk.user);
+    currentProfile = profile;
     renderUserProfile(clerk.user, profile);
 
     const registration = await loadRegistration(clerkUserId);
