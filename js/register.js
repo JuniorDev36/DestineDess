@@ -284,17 +284,26 @@ verifyButton.addEventListener('click', async function () {
             // hiccup here doesn't block the student from reaching the
             // portal.
             try {
+                // Create student profile in Supabase
                 const supabase = getSupabase();
-                await supabase.from('student_profiles').upsert(
-                    {
-                        clerk_user_id: clerk.user.id,
-                        full_name: fullNameInput.value.trim(),
-                        email: emailInput.value.trim(),
-                    },
-                    { onConflict: 'clerk_user_id' }
-                );
-            } catch (profileErr) {
-                console.error('Could not create student profile:', profileErr);
+
+                const { data, error } = await supabase
+                    .from('student_profiles')
+                    .upsert(
+                        {
+                            clerk_user_id: clerk.user.id,
+                            full_name: fullNameInput.value.trim(),
+                            email: emailInput.value.trim(),
+                        },
+                        {
+                            onConflict: 'clerk_user_id',
+                        }
+                    );
+
+                console.log('Supabase response:', data);
+                console.log('Supabase error:', error);
+            } catch (supabaseErr) {
+                console.error('Supabase student profile creation failed:', supabaseErr);
             }
 
             // Redirect to student-portal.html
@@ -308,7 +317,7 @@ verifyButton.addEventListener('click', async function () {
     } finally {
         setButtonLoading(verifyButton, false, 'Verifying...', 'Verify Email');
     }
-});
+}   );
 
 resendCodeBtn.addEventListener('click', async function () {
     if (!pendingSignUp) {
