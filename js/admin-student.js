@@ -32,6 +32,10 @@ const assignPackageBtn = document.getElementById('assignPackageBtn');
 
 const adminProgressLabel = document.getElementById('adminProgressLabel');
 const adminProgressFill = document.getElementById('adminProgressFill');
+const adminTheoryProgressLabel = document.getElementById('adminTheoryProgressLabel');
+const adminTheoryProgressFill = document.getElementById('adminTheoryProgressFill');
+const adminPracticalProgressLabel = document.getElementById('adminPracticalProgressLabel');
+const adminPracticalProgressFill = document.getElementById('adminPracticalProgressFill');
 const adminModuleList = document.getElementById('adminModuleList');
 
 const adminLessonsTableBody = document.getElementById('adminLessonsTableBody');
@@ -281,11 +285,33 @@ function nextStatus(status) {
     return STATUS_CYCLE[(index + 1) % STATUS_CYCLE.length];
 }
 
+function resetAdminProgressBars() {
+    [
+        [adminProgressLabel, adminProgressFill],
+        [adminTheoryProgressLabel, adminTheoryProgressFill],
+        [adminPracticalProgressLabel, adminPracticalProgressFill],
+    ].forEach(([labelEl, fillEl]) => {
+        labelEl.textContent = '—';
+        fillEl.style.width = '0%';
+    });
+}
+
+function renderAdminProgressBar(labelEl, fillEl, items, emptyLabel) {
+    if (!items.length) {
+        labelEl.textContent = emptyLabel;
+        fillEl.style.width = '0%';
+        return;
+    }
+    const completedCount = items.filter((m) => m.status === 'completed').length;
+    const percent = Math.round((completedCount / items.length) * 100);
+    labelEl.textContent = `${completedCount} of ${items.length} complete (${percent}%)`;
+    fillEl.style.width = `${percent}%`;
+}
+
 async function loadModules() {
     if (!currentRegistration?.package_id) {
         adminModuleList.innerHTML = '<p style="color: var(--color-text-muted); font-size: 14px;">Assign a package to see its modules.</p>';
-        adminProgressLabel.textContent = '—';
-        adminProgressFill.style.width = '0%';
+        resetAdminProgressBars();
         return;
     }
 
@@ -296,7 +322,7 @@ async function loadModules() {
     // global theory-gated curriculum if the package has none of its own.
     const { data: packageModules, error: packageModulesError } = await supabase
         .from('course_modules')
-        .select('id, name, sort_order')
+        .select('id, name, sort_order, category')
         .eq('package_id', currentRegistration.package_id)
         .order('sort_order', { ascending: true });
 
@@ -309,7 +335,7 @@ async function loadModules() {
     if (!modules.length) {
         const { data: globalModules, error: globalModulesError } = await supabase
             .from('course_modules')
-            .select('id, name, sort_order, requires_theory')
+            .select('id, name, sort_order, requires_theory, category')
             .is('package_id', null)
             .order('sort_order', { ascending: true });
 
@@ -322,6 +348,7 @@ async function loadModules() {
 
     if (!modules.length) {
         adminModuleList.innerHTML = '<p style="color: var(--color-text-muted); font-size: 14px;">This package has no modules defined yet.</p>';
+        resetAdminProgressBars();
         return;
     }
 
@@ -340,12 +367,12 @@ async function loadModules() {
         id: m.id,
         name: m.name,
         status: progressByModule.get(m.id) || 'locked',
+        category: m.category || 'practical',
     }));
 
-    const completedCount = merged.filter((m) => m.status === 'completed').length;
-    const percent = Math.round((completedCount / merged.length) * 100);
-    adminProgressLabel.textContent = `${completedCount} of ${merged.length} modules complete (${percent}%)`;
-    adminProgressFill.style.width = `${percent}%`;
+    renderAdminProgressBar(adminProgressLabel, adminProgressFill, merged, 'No modules yet');
+    renderAdminProgressBar(adminTheoryProgressLabel, adminTheoryProgressFill, merged.filter((m) => m.category === 'theory'), 'No theory modules');
+    renderAdminProgressBar(adminPracticalProgressLabel, adminPracticalProgressFill, merged.filter((m) => m.category === 'practical'), 'No practical modules');
 
     adminModuleList.innerHTML = merged
         .map(
