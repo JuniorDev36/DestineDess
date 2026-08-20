@@ -14,8 +14,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { getClerk } from './clerk-client.js';
 
-const SUPABASE_URL = 'https://twoijswrakxjhxfiqpdk.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3b2lqc3dyYWt4amh4ZmlxcGRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYxMzExMjksImV4cCI6MjEwMTcwNzEyOX0.oJWtTBgUvVDa4nEMcoLARoBQ90ZXuT3R4hDeFZeMRXc';
+const SUPABASE_URL = 'https://nviidicrnueaccqeovcy.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IIm52aWlkaWNybnVlYWNjcWVvdmN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODDcxOTUwMjQsImV4cCI6MjEwMMjc3MTAyNH0.WflTOK0Eiy0pzvfKuYbmlhOV4IU_-1RmJcRB1tVw8YA';
 
 let supabaseClient = null;
 
