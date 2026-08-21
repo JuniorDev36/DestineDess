@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /student-portal.html
+Disallow: /admin-dashboard.html
+Disallow: /admin-student.html
+
+Sitemap: https://destinydess.com/sitemap.xml
