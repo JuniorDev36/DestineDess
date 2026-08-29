@@ -20,8 +20,10 @@ const dashboardNextLesson = document.getElementById('dashboardNextLesson');
 const dashboardInstructor = document.getElementById('dashboardInstructor');
 const dashboardLessonType = document.getElementById('dashboardLessonType');
 
-const theoryStatusBadge = document.getElementById('theoryStatusBadge');
-const theoryStatusText = document.getElementById('theoryStatusText');
+const progressLabel = document.getElementById('progressLabel');
+const progressFill = document.getElementById('progressFill');
+const theoryProgressLabel = document.getElementById('theoryProgressLabel');
+const theoryProgressFill = document.getElementById('theoryProgressFill');
 const practicalProgressLabel = document.getElementById('practicalProgressLabel');
 const practicalProgressFill = document.getElementById('practicalProgressFill');
 const moduleList = document.getElementById('moduleList');
@@ -52,9 +54,6 @@ const registrationNotes = document.getElementById('registrationNotes');
 const registrationForm = document.getElementById('registrationForm');
 const registrationInfo = document.getElementById('registrationInfo');
 const packageOptions = document.getElementById('packageOptions');
-const packageOptionGroup = document.getElementById('packageOptionGroup');
-const packageOptionLabel = document.getElementById('packageOptionLabel');
-const packageOptionSelect = document.getElementById('packageOptionSelect');
 const regPhoneInput = document.getElementById('regPhoneInput');
 const regDobInput = document.getElementById('regDobInput');
 const regAddressInput = document.getElementById('regAddressInput');
@@ -63,7 +62,6 @@ const registrationFormSuccess = document.getElementById('registrationFormSuccess
 const submitRegistrationBtn = document.getElementById('submitRegistrationBtn');
 
 let selectedPackageId = null;
-let selectedPackageOptions = [];
 
 const upcomingLessonsTableBody = document.getElementById('upcomingLessonsTableBody');
 const reqLessonDate = document.getElementById('reqLessonDate');
@@ -294,7 +292,7 @@ async function loadRegistration(clerkUserId) {
 
     const { data: registration, error } = await supabase
         .from('registrations')
-        .select('*, packages(*), package_options(*)')
+        .select('*, packages(*)')
         .eq('clerk_user_id', clerkUserId)
         .order('registered_at', { ascending: false })
         .limit(1)
@@ -320,15 +318,11 @@ async function loadRegistration(clerkUserId) {
     registrationStatusBadge.classList.toggle('success', isActive);
     setText(registrationStatusText, `Registration: ${registration.status}`);
 
-    const packageLabel = registration.package_options?.name
-        ? `${registration.packages?.name} — ${registration.package_options.name}`
-        : registration.packages?.name;
-
     setText(registrationStatus, registration.status);
-    setText(registrationPackage, packageLabel);
+    setText(registrationPackage, registration.packages?.name);
     setText(registrationDate, formatDate(registration.registered_at));
     setText(registrationNotes, registration.notes);
-    setText(dashboardPackage, packageLabel);
+    setText(dashboardPackage, registration.packages?.name);
 
     registrationForm.style.display = 'none';
     registrationInfo.style.display = 'grid';
@@ -356,7 +350,7 @@ async function loadPackageOptions() {
 
     const { data: packages, error } = await supabase
         .from('packages')
-        .select('*, package_options(*)')
+        .select('*')
         .order('sort_order', { ascending: true });
 
     if (error) {
@@ -389,24 +383,6 @@ async function loadPackageOptions() {
             card.classList.add('selected');
             selectedPackageId = card.dataset.packageId;
             clearRegistrationFormError();
-
-            const pkg = packages.find((p) => p.id === selectedPackageId);
-            const options = (pkg?.package_options || []).sort((a, b) => a.sort_order - b.sort_order);
-            selectedPackageOptions = options;
-
-            if (options.length) {
-                packageOptionLabel.textContent = `Choose an option for ${pkg.name}`;
-                packageOptionSelect.innerHTML =
-                    '<option value="">Select…</option>' +
-                    options
-                        .map((opt) => `<option value="${opt.id}">${opt.name}${opt.price != null ? ` — P${opt.price}` : ''}</option>`)
-                        .join('');
-                packageOptionGroup.style.display = 'block';
-            } else {
-                selectedPackageOptions = [];
-                packageOptionGroup.style.display = 'none';
-                packageOptionSelect.value = '';
-            }
         });
     });
 }
@@ -416,11 +392,6 @@ async function submitRegistration(clerkUserId) {
 
     if (!selectedPackageId) {
         showRegistrationFormError('Please choose a package.');
-        return;
-    }
-
-    if (selectedPackageOptions.length && !packageOptionSelect.value) {
-        showRegistrationFormError('Please choose an option for the selected package.');
         return;
     }
 
@@ -451,7 +422,6 @@ async function submitRegistration(clerkUserId) {
             .insert({
                 clerk_user_id: clerkUserId,
                 package_id: selectedPackageId,
-                option_id: packageOptionSelect.value || null,
                 status: 'pending',
             });
 
@@ -580,29 +550,21 @@ async function submitLessonRequest(clerkUserId) {
 
 // ---------------------------------------------------------------------------
 // Course progress + modules
-// Theory is now a simple admin-controlled toggle (most students arrive
-// having completed it elsewhere) rather than a tracked curriculum — only
-// the practical modules are tracked module-by-module.
+// Theory-related modules only show for students whose package includes
+// theory lessons (currently just the Advanced Package).
 // ---------------------------------------------------------------------------
-function renderTheoryStatus() {
-    const isComplete = currentProfile?.theory_completed === true;
-    theoryStatusBadge.classList.toggle('success', isComplete);
-    theoryStatusText.textContent = isComplete ? 'Complete' : 'Pending';
-}
-
 async function loadProgress(clerkUserId, registration) {
-    renderTheoryStatus();
-
     const supabase = getSupabase();
+    const includesTheory = registration?.packages?.includes_theory ?? false;
 
     // Prefer modules scoped to this exact package; fall back to the
-    // shared practical curriculum if the package has none of its own.
+    // global theory-gated curriculum if the package has none of its own.
     let relevantModules = [];
 
     if (registration?.package_id) {
         const { data: packageModules, error: packageModulesError } = await supabase
             .from('course_modules')
-            .select('id, name, sort_order')
+            .select('id, name, sort_order, category')
             .eq('package_id', registration.package_id)
             .order('sort_order', { ascending: true });
 
@@ -616,7 +578,7 @@ async function loadProgress(clerkUserId, registration) {
     if (!relevantModules.length) {
         const { data: globalModules, error: globalModulesError } = await supabase
             .from('course_modules')
-            .select('id, name, sort_order')
+            .select('id, name, sort_order, requires_theory, category')
             .is('package_id', null)
             .order('sort_order', { ascending: true });
 
@@ -624,12 +586,18 @@ async function loadProgress(clerkUserId, registration) {
             logLoadError('global modules', globalModulesError);
         }
 
-        relevantModules = globalModules || [];
+        relevantModules = (globalModules || []).filter((m) => !m.requires_theory || includesTheory);
+    }
+
+    function resetBar(labelEl, fillEl) {
+        labelEl.textContent = 'No modules yet';
+        fillEl.style.width = '0%';
     }
 
     if (!relevantModules.length) {
-        practicalProgressLabel.textContent = 'No modules yet';
-        practicalProgressFill.style.width = '0%';
+        resetBar(progressLabel, progressFill);
+        resetBar(theoryProgressLabel, theoryProgressFill);
+        resetBar(practicalProgressLabel, practicalProgressFill);
         moduleList.innerHTML = '<p style="color: var(--color-text-muted); font-size: 14px;">Your course modules will appear here once your curriculum is set up.</p>';
         return;
     }
@@ -648,12 +616,24 @@ async function loadProgress(clerkUserId, registration) {
     const merged = relevantModules.map((module) => ({
         name: module.name,
         status: progressByModule.get(module.id) || 'locked',
+        category: module.category || 'practical',
     }));
 
-    const completedCount = merged.filter((m) => m.status === 'completed').length;
-    const percent = Math.round((completedCount / merged.length) * 100);
-    practicalProgressLabel.textContent = `${completedCount} of ${merged.length} complete (${percent}%)`;
-    practicalProgressFill.style.width = `${percent}%`;
+    function renderBar(labelEl, fillEl, items, emptyLabel) {
+        if (!items.length) {
+            labelEl.textContent = emptyLabel;
+            fillEl.style.width = '0%';
+            return;
+        }
+        const completedCount = items.filter((m) => m.status === 'completed').length;
+        const percent = Math.round((completedCount / items.length) * 100);
+        labelEl.textContent = `${completedCount} of ${items.length} complete (${percent}%)`;
+        fillEl.style.width = `${percent}%`;
+    }
+
+    renderBar(progressLabel, progressFill, merged, 'No modules yet');
+    renderBar(theoryProgressLabel, theoryProgressFill, merged.filter((m) => m.category === 'theory'), 'No theory modules');
+    renderBar(practicalProgressLabel, practicalProgressFill, merged.filter((m) => m.category === 'practical'), 'No practical modules');
 
     const statusIcon = {
         completed: 'check_circle',
