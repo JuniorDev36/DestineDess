@@ -254,13 +254,39 @@ async function loadAnnouncements() {
         .map(
             (item) => `
                 <div class="announcement-item">
-                    <h4>${item.title}</h4>
+                    <div class="announcement-item-header">
+                        <h4>${item.title}</h4>
+                        <button class="btn btn-small btn-danger-outline" data-announcement-id="${item.id}" type="button">Delete</button>
+                    </div>
                     <div class="announcement-date">${formatDate(item.published_at)}</div>
                     <p>${item.body}</p>
                 </div>
             `
         )
         .join('');
+
+    announcementsList.querySelectorAll('button[data-announcement-id]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            if (!window.confirm('Delete this announcement? This cannot be undone.')) {
+                return;
+            }
+
+            btn.disabled = true;
+            try {
+                const supabase = getSupabase();
+                const { error: deleteError } = await supabase
+                    .from('announcements')
+                    .delete()
+                    .eq('id', btn.dataset.announcementId);
+
+                if (deleteError) throw deleteError;
+                await loadAnnouncements();
+            } catch (err) {
+                logLoadError('announcement deletion', err);
+                btn.disabled = false;
+            }
+        });
+    });
 }
 
 function showAnnouncementFormError(message) {
